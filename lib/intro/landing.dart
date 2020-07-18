@@ -8,6 +8,7 @@ import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/navigation.dart';
 import 'package:meta_app/utils/text_style.dart';
+import 'package:flare_flutter/flare_actor.dart';
 
 class Landing extends StatefulWidget {
   @override
@@ -49,10 +50,10 @@ class _LandingState extends State<Landing> {
                     flex: 4,
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      child: Image.asset(
-                        "images/landing_1.png",
-                        fit: BoxFit.contain,
-                      ),
+                      child: FlareActor("flares/meta_space.flr",
+                          alignment: Alignment.center,
+                          fit: BoxFit.fitWidth,
+                          animation: "animate"),
                     ),
                   ),
                   Expanded(flex: 1, child: SizedBox()),
@@ -130,11 +131,11 @@ class _LandingState extends State<Landing> {
                   Expanded(
                     flex: 4,
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 25, 0, 25),
-                      child: Image.asset(
-                        "images/landing_3.png",
-                        fit: BoxFit.contain,
-                      ),
+                      padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: FlareActor("flares/meta_super_saiyan.flr",
+                          alignment: Alignment.center,
+                          fit: BoxFit.fitHeight,
+                          animation: "animate"),
                     ),
                   ),
                   Expanded(flex: 1, child: SizedBox()),

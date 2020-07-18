@@ -21,13 +21,23 @@ class _MessagesViewState extends State<MessagesView> {
           Faker().internet.userName(),
           style: appBarTextStyle,
         ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            EvaIcons.chevronLeft,
+            color: Colors.white,
+            size: 40,
+          ),
+        ),
       ),
       backgroundColor: metaDarkBlue,
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               reverse: true,
               shrinkWrap: true,
               itemCount: 50,

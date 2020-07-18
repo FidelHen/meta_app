@@ -54,6 +54,7 @@ class _RootState extends State<Root> {
           ],
         ),
         bottomNavigationBar: BottomAppBar(
+          elevation: 20,
           color: metaLightBlue,
           child: Container(
             height: 60,

@@ -67,11 +67,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
           child: Container(
             width: DeviceSize().getWidth(context),
             child: ListView(
+              physics: BouncingScrollPhysics(),
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                      right: DeviceSize().getWidth(context) / 10,
-                      left: DeviceSize().getWidth(context) / 10,
+                      right: DeviceSize().getWidth(context) / 16,
+                      left: DeviceSize().getWidth(context) / 16,
                       top: DeviceSize().getHeight(context) * 0.03),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,8 +100,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    right: DeviceSize().getWidth(context) / 10,
-                    left: DeviceSize().getWidth(context) / 10,
+                    right: DeviceSize().getWidth(context) / 16,
+                    left: DeviceSize().getWidth(context) / 16,
                     top: 40,
                   ),
                   child: Column(
@@ -138,7 +139,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           cursorColor: metaGreen,
                           controller: usernameController,
                           style: textFieldTextStyle,
+                          maxLength: 25,
                           decoration: InputDecoration(
+                            counterStyle:
+                                GoogleFonts.openSans(color: Colors.white),
                             enabledBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: metaLightBlue, width: 2),
@@ -165,14 +169,17 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       Padding(
                         padding: EdgeInsets.only(bottom: 8.0),
                         child: TextField(
-                          maxLines: 8,
+                          maxLines: 4,
                           onSubmitted: (value) {},
                           focusNode: bioNode,
                           controller: bioController,
                           textInputAction: TextInputAction.done,
                           cursorColor: metaGreen,
                           style: textFieldTextStyle,
+                          maxLength: 150,
                           decoration: InputDecoration(
+                            counterStyle:
+                                GoogleFonts.openSans(color: Colors.white),
                             enabledBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: metaLightBlue, width: 2),

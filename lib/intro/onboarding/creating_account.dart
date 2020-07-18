@@ -1,3 +1,4 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meta_app/root/root.dart';
@@ -55,8 +56,6 @@ class _CreatingAccountState extends State<CreatingAccount>
 
   @override
   void didChangeDependencies() {
-    //Functions
-    pulseIcon();
     super.didChangeDependencies();
   }
 
@@ -65,44 +64,71 @@ class _CreatingAccountState extends State<CreatingAccount>
     return Scaffold(
       backgroundColor: metaDarkBlue,
       body: SafeArea(
-        child: Align(
-          alignment: Alignment(0, -0.3),
-          child: Container(
-            height: DeviceSize().getHeight(context) * 0.2 + 100,
-            child: Column(
-              children: [
-                !done
-                    ? Container(
-                        height: iconSize,
+        child: !done
+            ? Container(
+                width: DeviceSize().getWidth(context),
+                height: DeviceSize().getHeight(context),
+                child: Column(
+                  children: [
+                    Container(
+                      height: DeviceSize().getHeight(context) / 10,
+                    ),
+                    Container(
+                      height: DeviceSize().getHeight(context) * 0.3,
+                      child: FlareActor("flares/meta_incubator.flr",
+                          alignment: Alignment.center,
+                          fit: BoxFit.fitHeight,
+                          animation: "animate"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                      child: Text(
+                        text,
+                        style: GoogleFonts.sourceCodePro(
+                            color: Colors.white,
+                            fontSize: 20,
+                            wordSpacing: -2,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            : Container(
+                width: DeviceSize().getWidth(context),
+                height: DeviceSize().getHeight(context),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: DeviceSize().getHeight(context) / 5,
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: AnimatedContainer(
+                        duration: Duration(seconds: 3),
+                        width: DeviceSize().getHeight(context) * 0.15,
                         child: Image.asset(
-                          'images/loading_icon.png',
-                        ),
-                      )
-                    : ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: AnimatedContainer(
-                          duration: Duration(seconds: 3),
-                          height: DeviceSize().getHeight(context) * 0.15,
-                          child: Image.asset(
-                            'images/temp_avatar.png',
-                          ),
+                          'images/temp_avatar.png',
                         ),
                       ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 25, 15, 0),
-                  child: Text(
-                    text,
-                    style: GoogleFonts.sourceCodePro(
-                        color: Colors.white,
-                        fontSize: 20,
-                        wordSpacing: -2,
-                        fontWeight: FontWeight.w700),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
+                    ),
+                    SizedBox(
+                      height: DeviceSize().getHeight(context) / 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                      child: Text(
+                        text,
+                        style: GoogleFonts.sourceCodePro(
+                            color: Colors.white,
+                            fontSize: 20,
+                            wordSpacing: -2,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    )
+                  ],
+                ),
+              ),
       ),
       floatingActionButton: done
           ? Padding(
@@ -130,40 +156,6 @@ class _CreatingAccountState extends State<CreatingAccount>
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
-  }
-
-  void pulseIcon() {
-    //Variables
-    iconSize = DeviceSize().getHeight(context) * 0.2;
-
-    //Pulse animation
-    motionController = AnimationController(
-      duration: Duration(milliseconds: 800),
-      vsync: this,
-      lowerBound: 0.9,
-    );
-
-    motionAnimation = CurvedAnimation(
-      parent: motionController,
-      curve: Curves.ease,
-    );
-
-    motionController.forward();
-    motionController.addStatusListener((status) {
-      setState(() {
-        if (status == AnimationStatus.completed) {
-          motionController.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-          motionController.forward();
-        }
-      });
-    });
-
-    motionController.addListener(() {
-      setState(() {
-        iconSize = motionController.value * 200;
-      });
-    });
   }
 
   void updateText() {

@@ -57,7 +57,7 @@ class _SearchState extends State<Search> {
                     onSubmitted: (value) {},
                     cursorColor: metaGreen,
                     decoration: InputDecoration(
-                      hintText: 'Search',
+                      hintText: 'Search users & tags',
                       hintStyle:
                           textFieldTextStyle.copyWith(color: Colors.white70),
                       icon: Padding(

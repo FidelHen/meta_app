@@ -3,7 +3,13 @@ import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:meta_app/components/modals/clip_owner_modal.dart';
+import 'package:meta_app/root/media_player.dart';
+import 'package:meta_app/root/profile/edit_profile.dart';
+import 'package:meta_app/root/profile/friends_list.dart';
+import 'package:meta_app/root/profile/post_clip.dart';
 import 'package:meta_app/root/settings/settings.dart';
+import 'package:meta_app/root/web_view.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/navigation.dart';
@@ -56,6 +62,7 @@ class _ProfileState extends State<Profile> {
       body: Container(
         width: DeviceSize().getWidth(context),
         child: ListView(
+          physics: BouncingScrollPhysics(),
           children: [
             Stack(
               alignment: Alignment(0, 0),
@@ -66,14 +73,17 @@ class _ProfileState extends State<Profile> {
                       child:
                           Image.asset('images/profile_image_background.png')),
                 ),
-                Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: Container(
-                        height: DeviceSize().getWidth(context) * 0.25,
-                        width: DeviceSize().getWidth(context) * 0.25,
-                        color: Colors.grey,
-                        child: Image.asset('images/temp_avatar.png')),
+                Hero(
+                  tag: 'profileImage',
+                  child: Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: Container(
+                          height: DeviceSize().getWidth(context) * 0.25,
+                          width: DeviceSize().getWidth(context) * 0.25,
+                          color: Colors.grey,
+                          child: Image.asset('images/temp_avatar.png')),
+                    ),
                   ),
                 ),
               ],
@@ -102,7 +112,15 @@ class _ProfileState extends State<Profile> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     RawMaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigation().segue(
+                            page: WebView(
+                              title: 'Facebook Gaming',
+                              url: 'https://www.facebook.com/MuffinManStreams/',
+                            ),
+                            context: context,
+                            fullScreen: false);
+                      },
                       elevation: 0,
                       fillColor: facebookBlue,
                       child: Container(
@@ -114,7 +132,16 @@ class _ProfileState extends State<Profile> {
                       shape: CircleBorder(),
                     ),
                     RawMaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigation().segue(
+                            page: WebView(
+                              title: 'Youtube',
+                              url:
+                                  'https://www.youtube.com/user/TheRealNICKMERCS',
+                            ),
+                            context: context,
+                            fullScreen: false);
+                      },
                       elevation: 0,
                       fillColor: Colors.red,
                       child: Container(
@@ -126,7 +153,15 @@ class _ProfileState extends State<Profile> {
                       shape: CircleBorder(),
                     ),
                     RawMaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigation().segue(
+                            page: WebView(
+                              title: 'Twitch',
+                              url: 'https://www.twitch.tv/nickmercs',
+                            ),
+                            context: context,
+                            fullScreen: false);
+                      },
                       elevation: 0,
                       fillColor: twitchPurple,
                       child: Container(
@@ -151,7 +186,12 @@ class _ProfileState extends State<Profile> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigation().segue(
+                          page: EditProfile(),
+                          context: context,
+                          fullScreen: true);
+                    },
                     child: Container(
                       height: 36,
                       width: DeviceSize().getWidth(context) / 3.5,
@@ -166,8 +206,13 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
                 OutlineButton(
-                  onPressed: () {},
-                  borderSide: BorderSide(color: metaGreen),
+                  onPressed: () {
+                    Navigation().segue(
+                        page: FriendsList(),
+                        context: context,
+                        fullScreen: false);
+                  },
+                  borderSide: BorderSide(color: Colors.white),
                   highlightedBorderColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
@@ -241,16 +286,24 @@ class _ProfileState extends State<Profile> {
                         children: [
                           Stack(
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          'https://i.pinimg.com/originals/f4/4e/a3/f44ea3c617af231a1ac21eb02189162b.jpg'),
-                                      fit: BoxFit.cover),
-                                ),
-                                child: AspectRatio(
-                                  aspectRatio: 16 / 9,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigation().segue(
+                                      page: MediaPlayer(),
+                                      context: context,
+                                      fullScreen: false);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            'https://i.pinimg.com/originals/f4/4e/a3/f44ea3c617af231a1ac21eb02189162b.jpg'),
+                                        fit: BoxFit.cover),
+                                  ),
+                                  child: AspectRatio(
+                                    aspectRatio: 16 / 9,
+                                  ),
                                 ),
                               ),
                             ],
@@ -260,7 +313,9 @@ class _ProfileState extends State<Profile> {
                             child: ListTile(
                               contentPadding: EdgeInsets.all(0),
                               trailing: GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  showClipOwnerModal(context: context);
+                                },
                                 child: Icon(EvaIcons.moreVertical,
                                     color: Colors.white),
                               ),
@@ -325,6 +380,13 @@ class _ProfileState extends State<Profile> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigation()
+                .segue(page: PostClip(), context: context, fullScreen: true);
+          },
+          backgroundColor: metaYellow,
+          child: Icon(EvaIcons.flash, color: Colors.white)),
     );
   }
 }

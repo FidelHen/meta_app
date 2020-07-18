@@ -2,7 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
-import 'package:meta_app/components/modals/platformModal.dart';
+import 'package:meta_app/components/modals/platform_modal.dart';
 import 'package:meta_app/intro/onboarding/update_profile.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
@@ -46,11 +46,12 @@ class _GamertagsState extends State<Gamertags> {
           child: Container(
             width: DeviceSize().getWidth(context),
             child: ListView(
+              physics: BouncingScrollPhysics(),
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                      right: DeviceSize().getWidth(context) / 10,
-                      left: DeviceSize().getWidth(context) / 10,
+                      right: DeviceSize().getWidth(context) / 16,
+                      left: DeviceSize().getWidth(context) / 16,
                       top: DeviceSize().getHeight(context) * 0.03),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,8 +79,8 @@ class _GamertagsState extends State<Gamertags> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    right: DeviceSize().getWidth(context) / 10,
-                    left: DeviceSize().getWidth(context) / 10,
+                    right: DeviceSize().getWidth(context) / 16,
+                    left: DeviceSize().getWidth(context) / 16,
                     top: 40,
                   ),
                   child: RaisedButton(
@@ -104,8 +105,8 @@ class _GamertagsState extends State<Gamertags> {
                 ),
                 Padding(
                     padding: EdgeInsets.only(
-                      right: DeviceSize().getWidth(context) / 10,
-                      left: DeviceSize().getWidth(context) / 10,
+                      right: DeviceSize().getWidth(context) / 16,
+                      left: DeviceSize().getWidth(context) / 16,
                       top: 25,
                     ),
                     child: Column(

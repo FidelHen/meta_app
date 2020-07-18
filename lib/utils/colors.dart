@@ -11,3 +11,4 @@ Color metaYellow = const Color(0xFFF4BF3A);
 Color twitchPurple = const Color(0xFF824DED);
 Color facebookBlue = const Color(0xFF3678EA);
 Color youtubeRed = const Color(0xFFFF3D00);
+Color twitterBlue = const Color(0xFF38A1F3);

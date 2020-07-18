@@ -3,6 +3,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meta_app/root/messages/messages_view.dart';
+import 'package:meta_app/root/messages/new_message.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/navigation.dart';
 import 'package:meta_app/utils/text_style.dart';
@@ -41,14 +42,18 @@ class _MessagesState extends State<Messages> {
           Padding(
             padding: EdgeInsets.all(8.0),
             child: IconButton(
-              icon: Icon(EvaIcons.plus),
-              onPressed: () {},
+              icon: Icon(EvaIcons.edit2Outline),
+              onPressed: () {
+                Navigation().segue(
+                    page: NewMessage(), context: context, fullScreen: true);
+              },
               color: Colors.white,
             ),
           )
         ],
       ),
       body: ListView.builder(
+        physics: BouncingScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {

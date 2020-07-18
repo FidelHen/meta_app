@@ -85,8 +85,8 @@ class _SignUpState extends State<SignUp> {
         backgroundColor: metaDarkBlue,
         body: Padding(
           padding: EdgeInsets.only(
-              right: DeviceSize().getWidth(context) / 10,
-              left: DeviceSize().getWidth(context) / 10,
+              right: DeviceSize().getWidth(context) / 16,
+              left: DeviceSize().getWidth(context) / 16,
               top: 25),
           child: ListView(children: [
             Padding(
@@ -133,6 +133,7 @@ class _SignUpState extends State<SignUp> {
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: TextField(
+                obscureText: true,
                 focusNode: passwordNode,
                 controller: passwordController,
                 keyboardType: TextInputType.visiblePassword,

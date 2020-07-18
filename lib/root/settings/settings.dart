@@ -2,7 +2,9 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meta_app/intro/landing.dart';
+import 'package:meta_app/root/settings/change_password.dart';
 import 'package:meta_app/root/settings/report_problem.dart';
+import 'package:meta_app/root/settings/terms_and_conditions.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/navigation.dart';
@@ -47,7 +49,6 @@ class _SettingsState extends State<Settings> {
                 child: ListView(
                   children: [
                     listTile(
-                        isPro: false,
                         title: 'Report a problem',
                         onPressed: () {
                           Navigation().segue(
@@ -56,14 +57,22 @@ class _SettingsState extends State<Settings> {
                               fullScreen: false);
                         }),
                     listTile(
-                        isPro: false,
                         title: 'Terms & Conditions',
-                        onPressed: () {}),
+                        onPressed: () {
+                          Navigation().segue(
+                              page: TermsAndConditions(),
+                              context: context,
+                              fullScreen: false);
+                        }),
                     listTile(
-                        isPro: false,
                         title: 'Change password',
-                        onPressed: () {}),
-                    listTile(isPro: true, title: 'Go Pro', onPressed: () {}),
+                        onPressed: () {
+                          Navigation().segue(
+                              page: ChangePassword(),
+                              context: context,
+                              fullScreen: false);
+                        }),
+                    goProListTile(title: 'Go Pro', onPressed: () {}),
                   ],
                 ),
               ),
@@ -88,14 +97,11 @@ class _SettingsState extends State<Settings> {
     );
   }
 
-  Widget listTile(
-      {@required bool isPro,
-      @required String title,
-      @required Function onPressed}) {
+  Widget listTile({@required String title, @required Function onPressed}) {
     return Padding(
       padding: EdgeInsets.only(bottom: 8.0),
       child: Container(
-        color: !isPro ? metaLightBlue : metaRed,
+        color: metaLightBlue,
         width: DeviceSize().getWidth(context),
         child: FlatButton(
           onPressed: onPressed,
@@ -120,6 +126,47 @@ class _SettingsState extends State<Settings> {
                       EvaIcons.chevronRight,
                       size: 35,
                       color: Colors.white,
+                    )
+                  ],
+                )),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget goProListTile({@required String title, @required Function onPressed}) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 8.0),
+      child: Container(
+        color: metaRed,
+        width: DeviceSize().getWidth(context),
+        child: FlatButton(
+          onPressed: onPressed,
+          child: Padding(
+            padding: EdgeInsets.only(
+              right: DeviceSize().getWidth(context) * 0.02,
+              left: DeviceSize().getWidth(context) * 0.06,
+            ),
+            child: Container(
+                height: 65,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      title,
+                      style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 4.0),
+                      child: Icon(
+                        EvaIcons.globe2Outline,
+                        size: 25,
+                        color: Colors.white,
+                      ),
                     )
                   ],
                 )),

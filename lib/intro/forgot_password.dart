@@ -61,8 +61,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         backgroundColor: metaDarkBlue,
         body: Padding(
           padding: EdgeInsets.only(
-              right: DeviceSize().getWidth(context) / 10,
-              left: DeviceSize().getWidth(context) / 10,
+              right: DeviceSize().getWidth(context) / 16,
+              left: DeviceSize().getWidth(context) / 16,
               top: 25),
           child: ListView(
             children: [

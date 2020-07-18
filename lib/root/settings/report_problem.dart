@@ -1,9 +1,12 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:meta_app/components/toast/success_toast.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/text_style.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class ReportProblem extends StatefulWidget {
   @override
@@ -40,9 +43,30 @@ class _ReportProblemState extends State<ReportProblem> {
   }
 
   @override
+  void dispose() {
+    //Textfields
+    subjectController.dispose();
+    messageController.dispose();
+    subjectNode.dispose();
+    messageNode.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            EvaIcons.chevronLeft,
+            color: Colors.white,
+            size: 40,
+          ),
+        ),
         backgroundColor: metaDarkBlue,
         elevation: 0,
         title: Text(
@@ -53,10 +77,10 @@ class _ReportProblemState extends State<ReportProblem> {
       backgroundColor: metaDarkBlue,
       body: Padding(
         padding: EdgeInsets.only(
-            right: DeviceSize().getWidth(context) / 10,
-            left: DeviceSize().getWidth(context) / 10,
+            right: DeviceSize().getWidth(context) / 16,
+            left: DeviceSize().getWidth(context) / 16,
             top: 25),
-        child: ListView(children: [
+        child: ListView(physics: BouncingScrollPhysics(), children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 0, 8, 12),
             child: Text(
@@ -69,7 +93,6 @@ class _ReportProblemState extends State<ReportProblem> {
             child: TextField(
               focusNode: subjectNode,
               controller: subjectController,
-              keyboardType: TextInputType.emailAddress,
               onSubmitted: (value) {
                 messageNode.requestFocus();
               },
@@ -107,7 +130,6 @@ class _ReportProblemState extends State<ReportProblem> {
               maxLines: 8,
               maxLength: 500,
               controller: messageController,
-              keyboardType: TextInputType.visiblePassword,
               cursorColor: metaGreen,
               style: textFieldTextStyle,
               decoration: InputDecoration(
@@ -132,8 +154,15 @@ class _ReportProblemState extends State<ReportProblem> {
           ? Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 12),
               child: FloatingActionButton.extended(
-                backgroundColor: metaGreen,
-                onPressed: () {},
+                backgroundColor: Colors.white,
+                onPressed: () {
+                  showOverlayNotification((context) {
+                    return SuccessToast(
+                      title: 'Successfully sent',
+                    );
+                  });
+                  Navigator.pop(context);
+                },
                 label: Container(
                   width: DeviceSize().getWidth(context) * 0.7,
                   child: Padding(
