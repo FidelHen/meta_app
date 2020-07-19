@@ -87,7 +87,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         textAlign: TextAlign.center,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 12.0),
+                        padding: const EdgeInsets.only(top: 4.0),
                         child: Text(
                           'What do we call you?',
                           style: GoogleFonts.openSans(
@@ -108,17 +108,31 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: Container(
-                            height: 80,
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
+                        child: Stack(
+                          alignment: Alignment.bottomRight,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Container(
+                                  height: DeviceSize().getWidth(context) * 0.2,
+                                  width: DeviceSize().getWidth(context) * 0.2,
+                                  color: Colors.grey,
+                                  child: Image.asset('images/temp_avatar.png')),
                             ),
-                            child: Image.asset(
-                              'images/temp_avatar.png',
-                            ),
-                          ),
+                            Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      color: metaDarkBlue, width: 2)),
+                              child: Icon(
+                                EvaIcons.edit,
+                                size: 18,
+                              ),
+                            )
+                          ],
                         ),
                       ),
                       Padding(

@@ -76,51 +76,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ),
       body: ListView(physics: BouncingScrollPhysics(), children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                RawMaterialButton(
-                  onPressed: () {},
-                  elevation: 0,
-                  fillColor: metaLightBlue,
-                  child: Container(
-                      height: 20,
-                      child: Image.asset(
-                        'images/league_logo.png',
-                      )),
-                  padding: EdgeInsets.all(15.0),
-                  shape: CircleBorder(),
-                ),
-                RawMaterialButton(
-                  onPressed: () {},
-                  elevation: 0,
-                  fillColor: metaLightBlue,
-                  child: Container(
-                      height: 20,
-                      child: Image.asset(
-                        'images/cod_mw_logo.png',
-                      )),
-                  padding: EdgeInsets.all(15.0),
-                  shape: CircleBorder(),
-                ),
-                RawMaterialButton(
-                  onPressed: () {},
-                  elevation: 0,
-                  fillColor: metaLightBlue,
-                  child: Container(
-                      height: 20,
-                      child: Image.asset(
-                        'images/fortnite_logo.png',
-                      )),
-                  padding: EdgeInsets.all(15.0),
-                  shape: CircleBorder(),
-                ),
-              ]),
-        ),
-        Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
           child: Text(
             'Reccomended',
             style: GoogleFonts.openSans(
@@ -165,9 +121,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 imageRadius: 40,
                                 imageCount: 3,
                                 totalCount: 162,
-                                backgroundColor: metaDarkBlue,
+                                backgroundColor: Colors.white,
                                 extraCountTextStyle: GoogleFonts.sourceCodePro(
-                                    color: Colors.white,
+                                    color: Colors.black,
                                     fontWeight: FontWeight.w600),
                                 imageBorderColor: metaGreen,
                                 imageBorderWidth: 2,
@@ -413,7 +369,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
         ),
         Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
           child: Text(
             'Upcoming',
             style: GoogleFonts.openSans(
@@ -564,7 +520,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           },
         ),
         Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
           child: Text(
             'Winners',
             style: GoogleFonts.openSans(

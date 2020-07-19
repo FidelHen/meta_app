@@ -42,43 +42,6 @@ class _MediaPlayerState extends State<MediaPlayer> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
-        appBar: AppBar(
-          elevation: 0,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              EvaIcons.chevronLeft,
-              color: Colors.white,
-              size: 40,
-            ),
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                //Video expansion
-                videoIsExpanded
-                    ? SystemChrome.setPreferredOrientations(
-                        [DeviceOrientation.portraitUp])
-                    : SystemChrome.setPreferredOrientations([
-                        DeviceOrientation.landscapeLeft,
-                        DeviceOrientation.landscapeRight
-                      ]);
-                videoIsExpanded = !videoIsExpanded;
-                Future.delayed(Duration(milliseconds: 150)).then((value) {
-                  youtubeController.play();
-                });
-              },
-              icon: Icon(
-                EvaIcons.expand,
-                color: Colors.white,
-              ),
-            ),
-          ],
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.transparent,
-        ),
         body: Stack(
           children: [
             Center(
@@ -95,6 +58,46 @@ class _MediaPlayerState extends State<MediaPlayer> {
                   size: 50.0,
                 ),
                 onReady: () {},
+              ),
+            ),
+            Container(
+              height: 80,
+              child: AppBar(
+                elevation: 0,
+                leading: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    EvaIcons.chevronLeft,
+                    color: Colors.white,
+                    size: 40,
+                  ),
+                ),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      //Video expansion
+                      videoIsExpanded
+                          ? SystemChrome.setPreferredOrientations(
+                              [DeviceOrientation.portraitUp])
+                          : SystemChrome.setPreferredOrientations([
+                              DeviceOrientation.landscapeLeft,
+                              DeviceOrientation.landscapeRight
+                            ]);
+                      videoIsExpanded = !videoIsExpanded;
+                      Future.delayed(Duration(milliseconds: 150)).then((value) {
+                        youtubeController.play();
+                      });
+                    },
+                    icon: Icon(
+                      EvaIcons.expand,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+                automaticallyImplyLeading: false,
+                backgroundColor: Colors.transparent,
               ),
             ),
           ],

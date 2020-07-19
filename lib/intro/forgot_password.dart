@@ -1,5 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/text_style.dart';
@@ -14,11 +15,22 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   TextEditingController emailController;
   FocusNode emailNode;
 
+  //Variables
+  bool keyboardIsHidden;
+
   @override
   void initState() {
     //Textfields
     emailController = TextEditingController();
     emailNode = FocusNode();
+
+    //Keyboard
+    keyboardIsHidden = true;
+    KeyboardVisibilityNotification().addNewListener(
+      onChange: (bool visible) {
+        keyboardIsHidden = !visible;
+      },
+    );
 
     super.initState();
   }
@@ -65,6 +77,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               left: DeviceSize().getWidth(context) / 16,
               top: 25),
           child: ListView(
+            physics: BouncingScrollPhysics(),
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 12),
@@ -76,7 +89,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               Padding(
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: TextField(
-                  autofocus: true,
                   focusNode: emailNode,
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -102,24 +114,26 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             ],
           ),
         ),
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
-          child: FloatingActionButton.extended(
-            backgroundColor: Colors.white,
-            onPressed: () {},
-            label: Container(
-              width: DeviceSize().getWidth(context) * 0.7,
-              child: Padding(
-                  padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
-                  child: Center(
-                    child: Text(
-                      'Reset',
-                      style: fabButtonTextStyle,
-                    ),
-                  )),
-            ),
-          ),
-        ),
+        floatingActionButton: keyboardIsHidden
+            ? Padding(
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
+                child: FloatingActionButton.extended(
+                  backgroundColor: Colors.white,
+                  onPressed: () {},
+                  label: Container(
+                    width: DeviceSize().getWidth(context) * 0.7,
+                    child: Padding(
+                        padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
+                        child: Center(
+                          child: Text(
+                            'Reset',
+                            style: fabButtonTextStyle,
+                          ),
+                        )),
+                  ),
+                ),
+              )
+            : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );

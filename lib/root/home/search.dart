@@ -43,32 +43,35 @@ class _SearchState extends State<Search> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Flexible(
-                child: Container(
-                  width: DeviceSize().getWidth(context),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: metaLightBlue,
-                  ),
-                  child: TextField(
-                    autofocus: true,
-                    style: textFieldTextStyle,
-                    controller: searchController,
-                    focusNode: searchNode,
-                    onSubmitted: (value) {},
-                    cursorColor: metaGreen,
-                    decoration: InputDecoration(
-                      hintText: 'Search users & tags',
-                      hintStyle:
-                          textFieldTextStyle.copyWith(color: Colors.white70),
-                      icon: Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
-                        child: Icon(
-                          EvaIcons.search,
-                          color: Colors.white,
-                          size: 20,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Container(
+                    width: DeviceSize().getWidth(context),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: metaLightBlue,
+                    ),
+                    child: TextField(
+                      autofocus: true,
+                      style: textFieldTextStyle,
+                      controller: searchController,
+                      focusNode: searchNode,
+                      onSubmitted: (value) {},
+                      cursorColor: metaGreen,
+                      decoration: InputDecoration(
+                        hintText: 'Search users & tags',
+                        hintStyle:
+                            textFieldTextStyle.copyWith(color: Colors.white70),
+                        icon: Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
+                          child: Icon(
+                            EvaIcons.search,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                         ),
+                        border: InputBorder.none,
                       ),
-                      border: InputBorder.none,
                     ),
                   ),
                 ),

@@ -66,7 +66,7 @@ class _GamertagsState extends State<Gamertags> {
                         textAlign: TextAlign.center,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 12.0),
+                        padding: const EdgeInsets.only(top: 4.0),
                         child: Text(
                           'Let us do the hard work of finding you players and tournaments',
                           style: GoogleFonts.openSans(

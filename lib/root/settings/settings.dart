@@ -47,6 +47,7 @@ class _SettingsState extends State<Settings> {
             children: [
               Expanded(
                 child: ListView(
+                  physics: BouncingScrollPhysics(),
                   children: [
                     listTile(
                         title: 'Report a problem',

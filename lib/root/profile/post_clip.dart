@@ -81,18 +81,19 @@ class _PostClipState extends State<PostClip>
         ),
         bottom: TabBar(
           controller: tabController,
-          indicatorColor: Colors.white,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.grey,
+          unselectedLabelStyle:
+              GoogleFonts.sourceCodePro(fontWeight: FontWeight.w500),
+          labelStyle: GoogleFonts.sourceCodePro(fontWeight: FontWeight.w600),
+          indicatorColor: metaGreen,
           tabs: [
             Tab(
-                icon: Text(
-              'Youtube',
-              style: GoogleFonts.openSans(
-                  fontSize: 14, fontWeight: FontWeight.w600),
-            )),
+              text: 'Youtube',
+            ),
             Tab(
-                icon: Text('Twitch',
-                    style: GoogleFonts.openSans(
-                        fontSize: 14, fontWeight: FontWeight.w600))),
+              text: 'Twitch',
+            ),
           ],
         ),
         backgroundColor: metaDarkBlue,

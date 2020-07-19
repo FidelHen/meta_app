@@ -38,6 +38,7 @@ class _TagState extends State<Tag> {
         ),
       ),
       body: ListView(
+        physics: BouncingScrollPhysics(),
         children: [
           ListView.builder(
               shrinkWrap: true,

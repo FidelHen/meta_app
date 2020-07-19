@@ -83,7 +83,7 @@ class _LoginState extends State<Login> {
               right: DeviceSize().getWidth(context) / 16,
               left: DeviceSize().getWidth(context) / 16,
               top: 25),
-          child: ListView(children: [
+          child: ListView(physics: BouncingScrollPhysics(), children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 12),
               child: Text(
@@ -172,6 +172,7 @@ class _LoginState extends State<Login> {
             ? Padding(
                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 12),
                 child: FloatingActionButton.extended(
+                  heroTag: 'reset',
                   backgroundColor: Colors.white,
                   onPressed: () {},
                   label: Container(

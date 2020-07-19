@@ -88,7 +88,7 @@ class _SignUpState extends State<SignUp> {
               right: DeviceSize().getWidth(context) / 16,
               left: DeviceSize().getWidth(context) / 16,
               top: 25),
-          child: ListView(children: [
+          child: ListView(physics: BouncingScrollPhysics(), children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 12),
               child: Text(
