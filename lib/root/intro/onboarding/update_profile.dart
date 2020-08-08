@@ -2,7 +2,9 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
-import 'package:meta_app/intro/onboarding/creating_account.dart';
+import 'package:meta_app/components/FAB.dart';
+import 'package:meta_app/components/textFields.dart';
+import 'package:meta_app/root/intro/onboarding/creating_account.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/navigation.dart';
@@ -79,19 +81,14 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     children: [
                       Text(
                         'Update your profile',
-                        style: GoogleFonts.sourceCodePro(
-                            color: Colors.white,
-                            fontSize: 22,
-                            wordSpacing: -2,
-                            fontWeight: FontWeight.w700),
+                        style: onboardingTitleTextStyle,
                         textAlign: TextAlign.center,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 4.0),
                         child: Text(
                           'What do we call you?',
-                          style: GoogleFonts.openSans(
-                              color: Colors.white, fontSize: 18),
+                          style: onboardingDescriptionTextStyle,
                           textAlign: TextAlign.center,
                         ),
                       )
@@ -135,13 +132,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 8, 8, 12),
-                        child: Text(
-                          'Display name',
-                          style: textFeidTitleTextStyle,
-                        ),
-                      ),
+                      textFieldTitle(title: 'Display name'),
                       Padding(
                         padding: EdgeInsets.only(bottom: 8.0),
                         child: TextField(
@@ -157,29 +148,15 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           decoration: InputDecoration(
                             counterStyle:
                                 GoogleFonts.openSans(color: Colors.white),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: metaLightBlue, width: 2),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: metaGreen, width: 2),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: metaRed, width: 2),
-                            ),
+                            enabledBorder: keyboardEnabledBorder,
+                            focusedBorder: keyboardFocusedBorder,
+                            errorBorder: keyboardErrorBorder,
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
+                            contentPadding: textFieldContentPadding,
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 8, 8, 12),
-                        child: Text(
-                          'How do you game?',
-                          style: textFeidTitleTextStyle,
-                        ),
-                      ),
+                      textFieldTitle(title: 'How do you game?'),
                       Padding(
                         padding: EdgeInsets.only(bottom: 8.0),
                         child: TextField(
@@ -194,19 +171,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           decoration: InputDecoration(
                             counterStyle:
                                 GoogleFonts.openSans(color: Colors.white),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: metaLightBlue, width: 2),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: metaGreen, width: 2),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: metaRed, width: 2),
-                            ),
+                            enabledBorder: keyboardEnabledBorder,
+                            focusedBorder: keyboardFocusedBorder,
+                            errorBorder: keyboardErrorBorder,
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
+                            contentPadding: textFieldContentPadding,
                           ),
                         ),
                       ),
@@ -218,29 +187,16 @@ class _UpdateProfileState extends State<UpdateProfile> {
           ),
         ),
         floatingActionButton: keyboardIsHidden
-            ? Padding(
-                padding: const EdgeInsets.fromLTRB(8, 8, 8, 12),
-                child: FloatingActionButton.extended(
-                  backgroundColor: Colors.white,
-                  onPressed: () {
-                    Navigation().segueToRoot(
-                        page: CreatingAccount(),
-                        context: context,
-                        fullScreen: true);
-                  },
-                  label: Container(
-                    width: DeviceSize().getWidth(context) * 0.7,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
-                      child: Center(
-                        child: Text(
-                          'Let\'s go!',
-                          style: fabButtonTextStyle,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+            ? extendedFAB(
+                context: context,
+                title: 'Let\'s go!',
+                color: Colors.white,
+                onPressed: () {
+                  Navigation().segueToRoot(
+                      page: CreatingAccount(),
+                      context: context,
+                      fullScreen: true);
+                },
               )
             : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

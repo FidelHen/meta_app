@@ -2,9 +2,13 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:meta_app/components/FAB.dart';
+import 'package:meta_app/components/textFields.dart';
+import 'package:meta_app/components/toast/loading_toast.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/text_style.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class PostClip extends StatefulWidget {
   @override
@@ -123,13 +127,7 @@ class _PostClipState extends State<PostClip>
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 24, 8, 12),
-                child: Text(
-                  'Youtube url',
-                  style: textFeidTitleTextStyle,
-                ),
-              ),
+              textFieldTitle(title: 'Youtube video url'),
               Padding(
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: TextField(
@@ -143,27 +141,15 @@ class _PostClipState extends State<PostClip>
                     hintStyle:
                         textFieldTextStyle.copyWith(color: Colors.white70),
                     hintText: 'youtube.com/watch?v=8GbMaKOAT0g',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaLightBlue, width: 2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaGreen, width: 2),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaRed, width: 2),
-                    ),
+                    enabledBorder: keyboardEnabledBorder,
+                    focusedBorder: keyboardFocusedBorder,
+                    errorBorder: keyboardErrorBorder,
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 8, 8, 12),
-                child: Text(
-                  'Clip tags',
-                  style: textFeidTitleTextStyle,
-                ),
-              ),
+              textFieldTitle(title: 'Clip tags'),
               Padding(
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: TextField(
@@ -177,15 +163,9 @@ class _PostClipState extends State<PostClip>
                     hintStyle:
                         textFieldTextStyle.copyWith(color: Colors.white70),
                     hintText: 'Seperate tags with space',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaLightBlue, width: 2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaGreen, width: 2),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaRed, width: 2),
-                    ),
+                    enabledBorder: keyboardEnabledBorder,
+                    focusedBorder: keyboardFocusedBorder,
+                    errorBorder: keyboardErrorBorder,
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
                   ),
@@ -214,13 +194,7 @@ class _PostClipState extends State<PostClip>
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 24, 8, 12),
-                child: Text(
-                  'Twitch clip',
-                  style: textFeidTitleTextStyle,
-                ),
-              ),
+              textFieldTitle(title: 'Twitch clip url'),
               Padding(
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: TextField(
@@ -235,27 +209,15 @@ class _PostClipState extends State<PostClip>
                         textFieldTextStyle.copyWith(color: Colors.white70),
                     hintText:
                         'https://clips.twitch.tv/BashfulHelpfulSalamanderPrimeMe',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaLightBlue, width: 2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaGreen, width: 2),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaRed, width: 2),
-                    ),
+                    enabledBorder: keyboardEnabledBorder,
+                    focusedBorder: keyboardFocusedBorder,
+                    errorBorder: keyboardErrorBorder,
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 8, 8, 12),
-                child: Text(
-                  'Clip tags',
-                  style: textFeidTitleTextStyle,
-                ),
-              ),
+              textFieldTitle(title: 'Clip tags'),
               Padding(
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: TextField(
@@ -269,15 +231,9 @@ class _PostClipState extends State<PostClip>
                     hintStyle:
                         textFieldTextStyle.copyWith(color: Colors.white70),
                     hintText: 'Seperate tags with space',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaLightBlue, width: 2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaGreen, width: 2),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaRed, width: 2),
-                    ),
+                    enabledBorder: keyboardEnabledBorder,
+                    focusedBorder: keyboardFocusedBorder,
+                    errorBorder: keyboardErrorBorder,
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
                   ),
@@ -288,25 +244,19 @@ class _PostClipState extends State<PostClip>
         ],
       ),
       floatingActionButton: keyboardIsHidden
-          ? Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 8, 12),
-              child: FloatingActionButton.extended(
-                backgroundColor: submitButtonColor,
-                onPressed: () {},
-                label: Container(
-                  width: DeviceSize().getWidth(context) * 0.7,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
-                    child: Center(
-                      child: Text(
-                        'Post',
-                        style: fabButtonTextStyle.copyWith(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            )
+          ? extendedFAB(
+              context: context,
+              title: 'Post',
+              color: submitButtonColor,
+              onPressed: () {
+                showOverlayNotification((context) {
+                  return LoadingToast(
+                    title: 'Uploading clip',
+                  );
+                });
+                Navigator.pop(context);
+              },
+              isDark: true)
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

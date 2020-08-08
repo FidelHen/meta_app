@@ -1,17 +1,17 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:meta_app/components/modals/clip_owner_modal.dart';
-import 'package:meta_app/root/media_player.dart';
-import 'package:meta_app/root/profile/edit_profile.dart';
-import 'package:meta_app/root/profile/friends_list.dart';
+import 'package:meta_app/components/profile/profile_action_buttons.dart';
+import 'package:meta_app/components/profile/profile_bio.dart';
+import 'package:meta_app/components/profile/profile_gamertags.dart';
+import 'package:meta_app/components/profile/profile_image.dart';
+import 'package:meta_app/components/profile/profile_socials.dart';
+import 'package:meta_app/components/video_clip.dart';
+import 'package:meta_app/models/gamertag.dart';
 import 'package:meta_app/root/profile/post_clip.dart';
 import 'package:meta_app/root/settings/settings.dart';
-import 'package:meta_app/root/web_view.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
+import 'package:meta_app/utils/enums.dart';
 import 'package:meta_app/utils/navigation.dart';
 import 'package:meta_app/utils/text_style.dart';
 import 'package:shimmer/shimmer.dart';
@@ -22,6 +22,37 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  //ScrollController
+  ScrollController listScrollController;
+
+  //Variables
+  bool fabIsHidden;
+  String username;
+  String profileImageUrl;
+
+  @override
+  void initState() {
+    //ScrollController
+    listScrollController = ScrollController();
+
+    //Varibles
+    fabIsHidden = false;
+    username = 'Fidelhen';
+    profileImageUrl = null;
+
+    //Functions
+    scrollControllerListener();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    //ScrollController
+    listScrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +62,7 @@ class _ProfileState extends State<Profile> {
         automaticallyImplyLeading: false,
         backgroundColor: metaDarkBlue,
         title: Text(
-          'Fidelhen',
+          username,
           style: appBarTextStyle,
         ),
         leading: Padding(
@@ -62,331 +93,85 @@ class _ProfileState extends State<Profile> {
       body: Container(
         width: DeviceSize().getWidth(context),
         child: ListView(
+          controller: listScrollController,
           physics: BouncingScrollPhysics(),
-          children: [
-            Stack(
-              alignment: Alignment(0, 0),
-              children: [
-                Center(
-                  child: Container(
-                      height: DeviceSize().getWidth(context) * 0.5,
-                      child:
-                          Image.asset('images/profile_image_background.png')),
-                ),
-                Hero(
-                  tag: 'profileImage',
-                  child: Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Container(
-                          height: DeviceSize().getWidth(context) * 0.25,
-                          width: DeviceSize().getWidth(context) * 0.25,
-                          color: Colors.grey,
-                          child: Image.asset('images/temp_avatar.png')),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  right: DeviceSize().getWidth(context) / 10,
-                  left: DeviceSize().getWidth(context) / 10,
-                  top: 25),
-              child: Center(
-                child: Text(
-                  'Stream every day on Twitch! Looking for aggro players on COD, DM me if you’re down!',
-                  textAlign: TextAlign.center,
-                  style:
-                      GoogleFonts.openSans(color: Colors.white, fontSize: 14),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  right: DeviceSize().getWidth(context) / 10,
-                  left: DeviceSize().getWidth(context) / 10,
-                  top: 24),
-              child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RawMaterialButton(
-                      onPressed: () {
-                        Navigation().segue(
-                            page: WebView(
-                              title: 'Facebook Gaming',
-                              url: 'https://www.facebook.com/MuffinManStreams/',
-                            ),
-                            context: context,
-                            fullScreen: false);
-                      },
-                      elevation: 0,
-                      fillColor: facebookBlue,
-                      child: Container(
-                          height: 20,
-                          child: Image.asset(
-                            'images/facebook_gaming_logo.png',
-                          )),
-                      padding: EdgeInsets.all(15.0),
-                      shape: CircleBorder(),
-                    ),
-                    RawMaterialButton(
-                      onPressed: () {
-                        Navigation().segue(
-                            page: WebView(
-                              title: 'Youtube',
-                              url:
-                                  'https://www.youtube.com/user/TheRealNICKMERCS',
-                            ),
-                            context: context,
-                            fullScreen: false);
-                      },
-                      elevation: 0,
-                      fillColor: Colors.red,
-                      child: Container(
-                          height: 20,
-                          child: Image.asset(
-                            'images/youtube_logo.png',
-                          )),
-                      padding: EdgeInsets.all(15.0),
-                      shape: CircleBorder(),
-                    ),
-                    RawMaterialButton(
-                      onPressed: () {
-                        Navigation().segue(
-                            page: WebView(
-                              title: 'Twitch',
-                              url: 'https://www.twitch.tv/nickmercs',
-                            ),
-                            context: context,
-                            fullScreen: false);
-                      },
-                      elevation: 0,
-                      fillColor: twitchPurple,
-                      child: Container(
-                          height: 20,
-                          child: Image.asset(
-                            'images/twitch_logo.png',
-                          )),
-                      padding: EdgeInsets.all(15.0),
-                      shape: CircleBorder(),
-                    ),
-                  ]),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 24),
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Padding(
-                  padding: EdgeInsets.only(right: 8.0),
-                  child: RaisedButton(
-                    elevation: 0,
-                    color: metaLightBlue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    onPressed: () {
-                      Navigation().segue(
-                          page: EditProfile(),
-                          context: context,
-                          fullScreen: true);
-                    },
-                    child: Container(
-                      height: 36,
-                      width: DeviceSize().getWidth(context) / 3.5,
-                      child: Center(
-                        child: Text(
-                          'Edit profile',
-                          style: GoogleFonts.openSans(
-                              color: Colors.white, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                OutlineButton(
-                  onPressed: () {
-                    Navigation().segue(
-                        page: FriendsList(),
-                        context: context,
-                        fullScreen: false);
-                  },
-                  borderSide: BorderSide(color: Colors.white),
-                  highlightedBorderColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  child: Container(
-                    height: 36,
-                    width: DeviceSize().getWidth(context) / 3.5,
-                    child: Center(
-                      child: Text(
-                        'My friends',
-                        style: GoogleFonts.openSans(
-                            color: Colors.white, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ),
-                ),
-              ]),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 24.0),
-              child: Container(
-                  height: 80,
-                  child: Swiper(
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                            color: metaLightBlue,
-                            borderRadius: BorderRadius.circular(5)),
-                        width: DeviceSize().getWidth(context) / 2,
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                  height: 25,
-                                  child: Image.asset(
-                                    'images/playstation_logo.png',
-                                  )),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  'Fidelhen',
-                                  style: GoogleFonts.openSans(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15),
-                                ),
-                              ),
-                            ]),
-                      );
-                    },
-                    itemCount: 3,
-                    loop: false,
-                    autoplay: true,
-                    autoplayDisableOnInteraction: true,
-                    fade: 0.1,
-                    viewportFraction: 0.5,
-                    scale: 0.9,
-                  )),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 24),
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 3,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Stack(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigation().segue(
-                                      page: MediaPlayer(),
-                                      context: context,
-                                      fullScreen: false);
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                            'https://i.pinimg.com/originals/f4/4e/a3/f44ea3c617af231a1ac21eb02189162b.jpg'),
-                                        fit: BoxFit.cover),
-                                  ),
-                                  child: AspectRatio(
-                                    aspectRatio: 16 / 9,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 4.0),
-                            child: ListTile(
-                              contentPadding: EdgeInsets.all(0),
-                              trailing: GestureDetector(
-                                onTap: () {
-                                  showClipOwnerModal(context: context);
-                                },
-                                child: Icon(EvaIcons.moreVertical,
-                                    color: Colors.white),
-                              ),
-                              leading: CircleAvatar(
-                                  backgroundColor: Colors.grey,
-                                  backgroundImage:
-                                      AssetImage('images/temp_avatar.png')),
-                              title: Text(
-                                'Fidelhen',
-                                style: GoogleFonts.sourceCodePro(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              subtitle: Padding(
-                                padding: const EdgeInsets.only(top: 4.0),
-                                child: Container(
-                                  height: 25,
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: 20,
-                                    shrinkWrap: true,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 4.0),
-                                        child: Container(
-                                          height: 25,
-                                          constraints:
-                                              BoxConstraints(minWidth: 50),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              color: metaLightBlue),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                            child: Center(
-                                              child: Text(
-                                                Faker().lorem.word(),
-                                                style: GoogleFonts.openSans(
-                                                    fontSize: 12,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-            )
-          ],
+          children: buildProfile(),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigation()
-                .segue(page: PostClip(), context: context, fullScreen: true);
-          },
-          backgroundColor: metaYellow,
-          child: Icon(EvaIcons.flash, color: Colors.white)),
+      floatingActionButton: !fabIsHidden
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigation().segue(
+                    page: PostClip(), context: context, fullScreen: true);
+              },
+              backgroundColor: metaYellow,
+              child: Icon(EvaIcons.flash, color: Colors.white))
+          : null,
     );
+  }
+
+  //Widget
+  List<Widget> buildProfile() {
+    return [
+      ProfileImage(
+        profileImageUrl: profileImageUrl,
+      ),
+      ProfileBio(
+        bio:
+            'Stream every day on Twitch! Looking for aggro players on COD, DM me if you’re down!',
+      ),
+      ProfileSocials(
+          twitchUrl: 'https://www.twitch.tv/nickmercs',
+          fbGamingUrl:
+              'https://www.facebook.com/OfficialY8/videos/4228325127207583/',
+          youtubeUrl: 'https://www.youtube.com/user/TheRealNICKMERCS',
+          twitterUrl: 'https://twitter.com/NICKMERCS'),
+      ProfileActionButtons(
+        profileAction: ProfileActionOption.IsOwner,
+        isViewerPro: false,
+      ),
+      ProfileGamertags(
+        gamertagsList: [
+          Gamertag(
+              platform: GamertagPlatform.LeagueOfLegends,
+              gamertag: 'Gainzville'),
+          Gamertag(
+              platform: GamertagPlatform.ModernWarfare, gamertag: 'HenFidel'),
+          Gamertag(platform: GamertagPlatform.Fortnite, gamertag: 'FidelHen'),
+          Gamertag(platform: GamertagPlatform.PS4, gamertag: 'HenFidel'),
+          Gamertag(platform: GamertagPlatform.Switch, gamertag: 'Gainzville'),
+        ],
+        isBlurred: false,
+      ),
+      SizedBox(
+        height: 24,
+      ),
+      VideoClip(
+        username: 'Fidelhen',
+        profileImageUrl: profileImageUrl,
+        tags: ['League', 'Trolling', 'LOL'],
+        isOwner: true,
+        previewImageUrl:
+            'https://img.redbull.com/images/c_crop,x_225,y_0,h_958,w_1437/c_fill,w_1500,h_1000/q_auto,f_auto/redbullcom/2017/10/11/f64b8633-e848-4afa-9791-9da869f7bfd7/league-of-legends-champions',
+        clipPlatform: ClipPlatform.Youtube,
+        videoUrl: 'https://www.youtube.com/watch?v=6LpA7_-Srqg',
+      ),
+    ];
+  }
+
+  //Functions
+  void scrollControllerListener() {
+    listScrollController.addListener(() {
+      if (listScrollController.position.maxScrollExtent ==
+          listScrollController.position.pixels) {
+        setState(() {
+          fabIsHidden = true;
+        });
+      } else {
+        setState(() {
+          fabIsHidden = false;
+        });
+      }
+    });
   }
 }

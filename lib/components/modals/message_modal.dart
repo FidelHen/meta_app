@@ -6,7 +6,7 @@ import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/text_style.dart';
 import 'package:overlay_support/overlay_support.dart';
 
-void showMessageModal({@required context}) {
+void showMessageModal({@required context, bool isNewMessage}) {
   showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -58,6 +58,9 @@ void showMessageModal({@required context}) {
                                     );
                                   });
                                   Navigator.pop(context);
+                                  if (isNewMessage) {
+                                    Navigator.pop(context);
+                                  }
                                 },
                                 child: Text(
                                   'Send',

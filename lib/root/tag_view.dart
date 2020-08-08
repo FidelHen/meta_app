@@ -54,7 +54,9 @@ class _TagState extends State<Tag> {
                           GestureDetector(
                             onTap: () {
                               Navigation().segue(
-                                  page: MediaPlayer(),
+                                  page: MediaPlayer(
+                                    videoUrl: '',
+                                  ),
                                   context: context,
                                   fullScreen: false);
                             },

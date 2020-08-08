@@ -2,7 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:meta_app/root/find_friends/find_friends.dart';
 import 'package:meta_app/root/home/home.dart';
-import 'package:meta_app/root/messages/messages.dart';
+import 'package:meta_app/root/messages/messages_preview.dart';
 import 'package:meta_app/root/notifications/notifications.dart';
 import 'package:meta_app/root/profile/profile.dart';
 import 'package:meta_app/utils/colors.dart';
@@ -46,7 +46,7 @@ class _RootState extends State<Root> {
           controller: pageController,
           physics: NeverScrollableScrollPhysics(),
           children: <Widget>[
-            Messages(),
+            MessagesPreview(),
             FindFriends(),
             Home(),
             Notifications(),
@@ -117,6 +117,7 @@ class _RootState extends State<Root> {
         ));
   }
 
+//Functions
   onPageChanged({@required int pageIndex}) {
     setState(() {
       this.pageIndex = pageIndex;

@@ -2,9 +2,13 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:meta_app/components/FAB.dart';
+import 'package:meta_app/components/textFields.dart';
+import 'package:meta_app/components/toast/success_toast.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/text_style.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -106,13 +110,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 8, 8, 12),
-            child: Text(
-              'Display name',
-              style: textFeidTitleTextStyle,
-            ),
-          ),
+          textFieldTitle(title: 'Display name'),
           Padding(
             padding: EdgeInsets.only(bottom: 8.0),
             child: TextField(
@@ -127,27 +125,15 @@ class _EditProfileState extends State<EditProfile> {
               maxLength: 25,
               decoration: InputDecoration(
                 counterStyle: GoogleFonts.openSans(color: Colors.white),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: metaLightBlue, width: 2),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: metaGreen, width: 2),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: metaRed, width: 2),
-                ),
+                enabledBorder: keyboardEnabledBorder,
+                focusedBorder: keyboardFocusedBorder,
+                errorBorder: keyboardErrorBorder,
                 border: OutlineInputBorder(),
                 contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 8, 8, 12),
-            child: Text(
-              'How do you game?',
-              style: textFeidTitleTextStyle,
-            ),
-          ),
+          textFieldTitle(title: 'How do you game?'),
           Padding(
             padding: EdgeInsets.only(bottom: 8.0),
             child: TextField(
@@ -161,27 +147,15 @@ class _EditProfileState extends State<EditProfile> {
               maxLength: 150,
               decoration: InputDecoration(
                 counterStyle: GoogleFonts.openSans(color: Colors.white),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: metaLightBlue, width: 2),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: metaGreen, width: 2),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: metaRed, width: 2),
-                ),
+                enabledBorder: keyboardEnabledBorder,
+                focusedBorder: keyboardFocusedBorder,
+                errorBorder: keyboardErrorBorder,
                 border: OutlineInputBorder(),
                 contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 8, 8, 12),
-            child: Text(
-              'Social links (3 max)',
-              style: textFeidTitleTextStyle,
-            ),
-          ),
+          textFieldTitle(title: 'Social links'),
           Padding(
             padding: EdgeInsets.only(bottom: 8.0),
             child: Row(
@@ -206,15 +180,9 @@ class _EditProfileState extends State<EditProfile> {
                             child: Image.asset('images/twitch_logo.png',
                                 scale: 45)),
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: metaLightBlue, width: 2),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: metaGreen, width: 2),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: metaRed, width: 2),
-                      ),
+                      enabledBorder: keyboardEnabledBorder,
+                      focusedBorder: keyboardFocusedBorder,
+                      errorBorder: keyboardErrorBorder,
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
                     ),
@@ -248,15 +216,9 @@ class _EditProfileState extends State<EditProfile> {
                                 'images/facebook_gaming_logo.png',
                                 scale: 50)),
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: metaLightBlue, width: 2),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: metaGreen, width: 2),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: metaRed, width: 2),
-                      ),
+                      enabledBorder: keyboardEnabledBorder,
+                      focusedBorder: keyboardFocusedBorder,
+                      errorBorder: keyboardErrorBorder,
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
                     ),
@@ -289,15 +251,9 @@ class _EditProfileState extends State<EditProfile> {
                             child: Image.asset('images/youtube_logo.png',
                                 scale: 40)),
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: metaLightBlue, width: 2),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: metaGreen, width: 2),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: metaRed, width: 2),
-                      ),
+                      enabledBorder: keyboardEnabledBorder,
+                      focusedBorder: keyboardFocusedBorder,
+                      errorBorder: keyboardErrorBorder,
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
                     ),
@@ -330,15 +286,9 @@ class _EditProfileState extends State<EditProfile> {
                             child: Image.asset('images/twitter_logo.png',
                                 color: Colors.white, scale: 35)),
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: metaLightBlue, width: 2),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: metaGreen, width: 2),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: metaRed, width: 2),
-                      ),
+                      enabledBorder: keyboardEnabledBorder,
+                      focusedBorder: keyboardFocusedBorder,
+                      errorBorder: keyboardErrorBorder,
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
                     ),
@@ -351,24 +301,18 @@ class _EditProfileState extends State<EditProfile> {
         ]),
       ),
       floatingActionButton: keyboardIsHidden
-          ? Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 8, 12),
-              child: FloatingActionButton.extended(
-                backgroundColor: Colors.white,
-                onPressed: () {},
-                label: Container(
-                  width: DeviceSize().getWidth(context) * 0.7,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
-                    child: Center(
-                      child: Text(
-                        'Save',
-                        style: fabButtonTextStyle,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+          ? extendedFAB(
+              context: context,
+              title: 'Save',
+              color: Colors.white,
+              onPressed: () {
+                showOverlayNotification((context) {
+                  return SuccessToast(
+                    title: 'Successfully saved',
+                  );
+                });
+                Navigator.pop(context);
+              },
             )
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

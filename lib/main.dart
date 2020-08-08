@@ -26,14 +26,28 @@ class MyApp extends StatelessWidget {
     return OverlaySupport(
       child: MaterialApp(
         title: 'Meta',
+        builder: (context, child) {
+          return ScrollConfiguration(
+            behavior: OverscrollBehavior(),
+            child: child,
+          );
+        },
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          splashColor: Colors.transparent,
-          backgroundColor: metaDarkBlue,
-          cursorColor: metaGreen,
-        ),
+            splashColor: Colors.transparent,
+            backgroundColor: metaDarkBlue,
+            cursorColor: metaGreen,
+            accentColor: Colors.transparent),
         home: Root(),
       ),
     );
+  }
+}
+
+class OverscrollBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
   }
 }

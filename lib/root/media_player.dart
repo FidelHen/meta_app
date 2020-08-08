@@ -6,6 +6,12 @@ import 'package:meta_app/utils/colors.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MediaPlayer extends StatefulWidget {
+  //Constructor
+  MediaPlayer({@required this.videoUrl});
+
+  //Variables
+  final String videoUrl;
+
   @override
   _MediaPlayerState createState() => _MediaPlayerState();
 }
@@ -13,6 +19,7 @@ class MediaPlayer extends StatefulWidget {
 class _MediaPlayerState extends State<MediaPlayer> {
   //Variables
   bool videoIsExpanded;
+  String videoId;
 
   //Youtube controller
   YoutubePlayerController youtubeController;
@@ -21,13 +28,8 @@ class _MediaPlayerState extends State<MediaPlayer> {
   void initState() {
     //Variables
     videoIsExpanded = false;
-
-    //Youtube controller
-    youtubeController = YoutubePlayerController(
-      initialVideoId: 'OBhb2ep-crM',
-      flags: YoutubePlayerFlags(autoPlay: true, enableCaption: false),
-    );
-
+    //Functions
+    startVideo();
     super.initState();
   }
 
@@ -48,7 +50,6 @@ class _MediaPlayerState extends State<MediaPlayer> {
               child: YoutubePlayer(
                 controller: youtubeController,
                 showVideoProgressIndicator: true,
-                bottomActions: [],
                 progressColors: ProgressBarColors(
                     playedColor: metaRed,
                     handleColor: metaRed,
@@ -74,33 +75,23 @@ class _MediaPlayerState extends State<MediaPlayer> {
                     size: 40,
                   ),
                 ),
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      //Video expansion
-                      videoIsExpanded
-                          ? SystemChrome.setPreferredOrientations(
-                              [DeviceOrientation.portraitUp])
-                          : SystemChrome.setPreferredOrientations([
-                              DeviceOrientation.landscapeLeft,
-                              DeviceOrientation.landscapeRight
-                            ]);
-                      videoIsExpanded = !videoIsExpanded;
-                      Future.delayed(Duration(milliseconds: 150)).then((value) {
-                        youtubeController.play();
-                      });
-                    },
-                    icon: Icon(
-                      EvaIcons.expand,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
                 automaticallyImplyLeading: false,
                 backgroundColor: Colors.transparent,
               ),
             ),
           ],
         ));
+  }
+
+  //Functions
+  void startVideo() {
+    //Variables
+    videoId = YoutubePlayer.convertUrlToId(widget.videoUrl);
+
+    //Youtube controller
+    youtubeController = YoutubePlayerController(
+      initialVideoId: videoId,
+      flags: YoutubePlayerFlags(autoPlay: true, enableCaption: false),
+    );
   }
 }

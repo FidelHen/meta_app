@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meta_app/components/modals/invite_modal.dart';
 import 'package:meta_app/utils/colors.dart';
+import 'package:meta_app/utils/enums.dart';
 import 'package:meta_app/utils/text_style.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -27,7 +28,7 @@ class _TournamentPreviewState extends State<TournamentPreview> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: Image.asset(
@@ -67,7 +68,6 @@ class _TournamentPreviewState extends State<TournamentPreview> {
             tabs: [
               Tab(text: "Overview"),
               Tab(text: "Bracket"),
-              Tab(text: "Leaderboard"),
             ],
           ),
         ),
@@ -77,7 +77,7 @@ class _TournamentPreviewState extends State<TournamentPreview> {
             Expanded(
               child: TabBarView(
                   physics: BouncingScrollPhysics(),
-                  children: [overviewTab(), bracketTab(), leaderboardTab()]),
+                  children: [overviewTab(), bracketTab()]),
             ),
             Container(
               color: metaDarkBlue,
@@ -148,220 +148,41 @@ class _TournamentPreviewState extends State<TournamentPreview> {
         SizedBox(
           height: 8,
         ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
-          child: Container(
-            height: 55,
-            decoration: BoxDecoration(
-              color: metaLightBlue,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Center(
-              child: ListTile(
-                title: Text(
-                  'Starts in:',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white70,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                trailing: Text(
-                  '00:00:00',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ),
-          ),
+        descriptionLabel(
+          title: 'Starts in:',
+          trailing: '00:00:00',
+          isPro: false,
         ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
-          child: Container(
-            height: 55,
-            decoration: BoxDecoration(
-              color: metaLightBlue,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Center(
-              child: ListTile(
-                title: Text(
-                  'Prize:',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white70,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                trailing: Shimmer.fromColors(
-                  baseColor: metaYellow,
-                  highlightColor: metaRed,
-                  child: Text(
-                    '1 Month subscription',
-                    style: GoogleFonts.openSans(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+        descriptionLabel(
+          title: 'Prize:',
+          trailing: '1 Month subscription',
+          isPro: true,
         ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
-          child: Container(
-            height: 55,
-            decoration: BoxDecoration(
-              color: metaLightBlue,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Center(
-              child: ListTile(
-                title: Text(
-                  'Game mode:',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white70,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                trailing: Text(
-                  'Highest kills',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          ),
+        descriptionLabel(
+          title: 'Game mode:',
+          trailing: 'Highest kills',
+          isPro: false,
         ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
-          child: Container(
-            height: 55,
-            decoration: BoxDecoration(
-              color: metaLightBlue,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Center(
-              child: ListTile(
-                title: Text(
-                  'Spots remaining:',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white70,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                trailing: Text(
-                  '1 team',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          ),
+        descriptionLabel(
+          title: 'Spots remaining:',
+          trailing: '1 team',
+          isPro: false,
         ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
-          child: Container(
-            height: 55,
-            decoration: BoxDecoration(
-              color: metaLightBlue,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Center(
-              child: ListTile(
-                title: Text(
-                  'Tournament style:',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white70,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                trailing: Text(
-                  'Bracket',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          ),
+        descriptionLabel(
+          title: 'Tournament style:',
+          trailing: 'Bracket',
+          isPro: false,
         ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
-          child: Container(
-            height: 55,
-            decoration: BoxDecoration(
-              color: metaLightBlue,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Center(
-              child: ListTile(
-                title: Text(
-                  'Platform:',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white70,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                trailing: Text(
-                  'All platforms',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          ),
+        descriptionLabel(
+          title: 'Platform:',
+          trailing: 'All platforms',
+          isPro: false,
         ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
-          child: Container(
-            height: 55,
-            decoration: BoxDecoration(
-              color: metaLightBlue,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Center(
-              child: ListTile(
-                title: Text(
-                  'Team size:',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white70,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                trailing: Text(
-                  'Duos (1-2 players)',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        )
+        descriptionLabel(
+          title: 'Team size:',
+          trailing: 'Duos (1-2 players)',
+          isPro: false,
+        ),
       ],
     );
   }
@@ -373,71 +194,8 @@ class _TournamentPreviewState extends State<TournamentPreview> {
         SizedBox(
           height: 8,
         ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
-          child: Text(
-            'Championship',
-            style: GoogleFonts.openSans(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-          child: Container(
-            height: 80,
-            decoration: BoxDecoration(
-              color: metaLightBlue,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 4,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: EdgeInsets.all(2.0),
-                          child: Container(
-                            height: 30,
-                            width: 30,
-                            color: Colors.transparent,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.grey,
-                            ),
-                          ),
-                        );
-                      }),
-                  Text('VS',
-                      style: GoogleFonts.sourceCodePro(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700)),
-                  ListView.builder(
-                      itemCount: 4,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: EdgeInsets.all(2.0),
-                          child: Container(
-                            height: 30,
-                            width: 30,
-                            color: Colors.transparent,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.grey,
-                            ),
-                          ),
-                        );
-                      }),
-                ],
-              ),
-            ),
-          ),
-        ),
+        bracketTitle(title: 'Championship'),
+        bracketLabel(),
       ],
     );
   }
@@ -454,65 +212,214 @@ class _TournamentPreviewState extends State<TournamentPreview> {
           itemCount: 50,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: metaLightBlue,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(12),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(right: 8.0),
-                                child: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      'https://source.unsplash.com/1600x900/?person'),
-                                ),
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    Faker().internet.userName(),
-                                    style: GoogleFonts.sourceCodePro(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Icon(
-                              EvaIcons.arrowUp,
-                              color: metaGreen,
-                            ),
-                            Text(' ${index + 1}',
-                                style: GoogleFonts.openSans(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700))
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
+            return leaderboardLabel(
+                profileImageUrl: 'https://source.unsplash.com/1600x900/?person',
+                username: Faker().internet.userName(),
+                positionIndicator: LeaderboardPositionIndicator.Positive,
+                index: index);
           },
         ),
       ],
+    );
+  }
+
+  //Widgets
+  Widget descriptionLabel(
+      {@required String title,
+      @required String trailing,
+      @required bool isPro}) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
+      child: Container(
+        height: 55,
+        decoration: BoxDecoration(
+          color: metaLightBlue,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Center(
+          child: ListTile(
+            title: Text(
+              title ?? '',
+              style: GoogleFonts.openSans(
+                color: Colors.white70,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            trailing: isPro
+                ? Shimmer.fromColors(
+                    baseColor: metaYellow,
+                    highlightColor: metaRed,
+                    child: Text(
+                      trailing,
+                      style: GoogleFonts.openSans(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  )
+                : Text(
+                    trailing ?? '',
+                    style: GoogleFonts.openSans(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget leaderboardLabel(
+      {@required String profileImageUrl,
+      @required String username,
+      @required LeaderboardPositionIndicator positionIndicator,
+      @required int index}) {
+    Widget icon = Container();
+    //Conditionals
+    if (positionIndicator == LeaderboardPositionIndicator.Negative) {
+      icon = Icon(
+        EvaIcons.arrowDown,
+        color: metaRed,
+      );
+    } else if (positionIndicator == LeaderboardPositionIndicator.Positive) {
+      icon = Icon(
+        EvaIcons.arrowUp,
+        color: metaGreen,
+      );
+    } else if (positionIndicator == LeaderboardPositionIndicator.Neutral) {
+      icon = Icon(
+        EvaIcons.arrowUp,
+        color: Colors.transparent,
+      );
+    }
+
+    return GestureDetector(
+      onTap: () {},
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
+        child: Container(
+          decoration: BoxDecoration(
+            color: metaLightBlue,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 8.0),
+                        child: CircleAvatar(
+                          backgroundImage: profileImageUrl != null
+                              ? NetworkImage(profileImageUrl ?? '')
+                              : AssetImage('images/temp_avatar.png'),
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            username ?? '',
+                            style: GoogleFonts.sourceCodePro(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  children: <Widget>[
+                    icon,
+                    Text(' ${index + 1}',
+                        style: GoogleFonts.openSans(
+                            color: Colors.white, fontWeight: FontWeight.w700))
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget bracketTitle({@required String title}) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
+      child: Text(
+        title,
+        style: GoogleFonts.openSans(
+            color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700),
+      ),
+    );
+  }
+
+  Widget bracketLabel() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+      child: Container(
+        height: 80,
+        decoration: BoxDecoration(
+          color: metaLightBlue,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: 4,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.all(2.0),
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        color: Colors.transparent,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.grey,
+                        ),
+                      ),
+                    );
+                  }),
+              Text('VS',
+                  style: GoogleFonts.sourceCodePro(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700)),
+              ListView.builder(
+                  itemCount: 4,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.all(2.0),
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        color: Colors.transparent,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.grey,
+                        ),
+                      ),
+                    );
+                  }),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

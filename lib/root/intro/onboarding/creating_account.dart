@@ -1,6 +1,6 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:meta_app/components/FAB.dart';
 import 'package:meta_app/root/root.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
@@ -12,15 +12,12 @@ class CreatingAccount extends StatefulWidget {
   _CreatingAccountState createState() => _CreatingAccountState();
 }
 
-class _CreatingAccountState extends State<CreatingAccount>
-    with TickerProviderStateMixin {
+class _CreatingAccountState extends State<CreatingAccount> {
   //Variables
   double iconSize;
   int step;
   String text;
   bool done;
-  AnimationController motionController;
-  Animation motionAnimation;
   Widget icon;
 
   @override
@@ -50,16 +47,6 @@ class _CreatingAccountState extends State<CreatingAccount>
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: metaDarkBlue,
@@ -84,11 +71,7 @@ class _CreatingAccountState extends State<CreatingAccount>
                       padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                       child: Text(
                         text,
-                        style: GoogleFonts.sourceCodePro(
-                            color: Colors.white,
-                            fontSize: 20,
-                            wordSpacing: -2,
-                            fontWeight: FontWeight.w700),
+                        style: onboardingTitleTextStyle,
                       ),
                     )
                   ],
@@ -119,11 +102,7 @@ class _CreatingAccountState extends State<CreatingAccount>
                       padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                       child: Text(
                         text,
-                        style: GoogleFonts.sourceCodePro(
-                            color: Colors.white,
-                            fontSize: 20,
-                            wordSpacing: -2,
-                            fontWeight: FontWeight.w700),
+                        style: onboardingTitleTextStyle,
                       ),
                     )
                   ],
@@ -131,33 +110,21 @@ class _CreatingAccountState extends State<CreatingAccount>
               ),
       ),
       floatingActionButton: done
-          ? Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 8, 12),
-              child: FloatingActionButton.extended(
-                backgroundColor: Colors.white,
-                onPressed: () {
-                  Navigation()
-                      .segue(page: Root(), context: context, fullScreen: true);
-                },
-                label: Container(
-                  width: DeviceSize().getWidth(context) * 0.7,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
-                    child: Center(
-                      child: Text(
-                        'Continue',
-                        style: fabButtonTextStyle,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+          ? extendedFAB(
+              context: context,
+              title: 'Continue',
+              color: Colors.white,
+              onPressed: () {
+                Navigation()
+                    .segue(page: Root(), context: context, fullScreen: true);
+              },
             )
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
+  //Functions
   void updateText() {
     if (step == 1) {
       setState(() {

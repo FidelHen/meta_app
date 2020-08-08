@@ -1,7 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:meta_app/intro/landing.dart';
+import 'package:meta_app/root/intro/landing.dart';
 import 'package:meta_app/root/settings/change_password.dart';
 import 'package:meta_app/root/settings/report_problem.dart';
 import 'package:meta_app/root/settings/terms_and_conditions.dart';
@@ -77,19 +76,24 @@ class _SettingsState extends State<Settings> {
                   ],
                 ),
               ),
-              Container(
-                child: FlatButton(
-                    onPressed: () {
-                      Navigation().segueToRoot(
-                          page: Landing(), context: context, fullScreen: true);
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(5.0),
-                    ),
-                    child: Text(
-                      'Logout',
-                      style: smallButtonTextStyle,
-                    )),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Container(
+                  child: FlatButton(
+                      onPressed: () {
+                        Navigation().segueToRoot(
+                            page: Landing(),
+                            context: context,
+                            fullScreen: true);
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(5.0),
+                      ),
+                      child: Text(
+                        'Logout',
+                        style: smallButtonTextStyle,
+                      )),
+                ),
               ),
             ],
           ),
@@ -118,10 +122,7 @@ class _SettingsState extends State<Settings> {
                   children: [
                     Text(
                       title,
-                      style: GoogleFonts.openSans(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600),
+                      style: profileGamertagTextStyle,
                     ),
                     Icon(
                       EvaIcons.chevronRight,
@@ -156,10 +157,7 @@ class _SettingsState extends State<Settings> {
                   children: [
                     Text(
                       title,
-                      style: GoogleFonts.openSans(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600),
+                      style: profileGamertagTextStyle,
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 4.0),

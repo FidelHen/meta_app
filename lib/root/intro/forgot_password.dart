@@ -1,6 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:meta_app/components/FAB.dart';
+import 'package:meta_app/components/textFields.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/text_style.dart';
@@ -79,13 +81,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           child: ListView(
             physics: BouncingScrollPhysics(),
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 0, 8, 12),
-                child: Text(
-                  'Email',
-                  style: textFeidTitleTextStyle,
-                ),
-              ),
+              textFieldTitle(title: 'Email'),
               Padding(
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: TextField(
@@ -97,17 +93,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   cursorColor: metaGreen,
                   style: textFieldTextStyle,
                   decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaLightBlue, width: 2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaGreen, width: 2),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: metaRed, width: 2),
-                    ),
+                    enabledBorder: keyboardEnabledBorder,
+                    focusedBorder: keyboardFocusedBorder,
+                    errorBorder: keyboardErrorBorder,
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
+                    contentPadding: textFieldContentPadding,
                   ),
                 ),
               ),
@@ -115,24 +105,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           ),
         ),
         floatingActionButton: keyboardIsHidden
-            ? Padding(
-                padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
-                child: FloatingActionButton.extended(
-                  backgroundColor: Colors.white,
-                  onPressed: () {},
-                  label: Container(
-                    width: DeviceSize().getWidth(context) * 0.7,
-                    child: Padding(
-                        padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
-                        child: Center(
-                          child: Text(
-                            'Reset',
-                            style: fabButtonTextStyle,
-                          ),
-                        )),
-                  ),
-                ),
-              )
+            ? extendedFAB(
+                color: Colors.white,
+                context: context,
+                title: 'Reset',
+                tag: 'reset',
+                onPressed: () {})
             : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),

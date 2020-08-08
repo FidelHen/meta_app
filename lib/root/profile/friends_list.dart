@@ -1,12 +1,9 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:meta_app/root/profile/friend.dart';
+import 'package:meta_app/components/profile/profile_list_item.dart';
 import 'package:meta_app/utils/colors.dart';
-import 'package:meta_app/utils/navigation.dart';
 import 'package:meta_app/utils/text_style.dart';
-import 'package:shimmer/shimmer.dart';
 
 class FriendsList extends StatefulWidget {
   @override
@@ -38,96 +35,21 @@ class _FriendsListState extends State<FriendsList> {
       ),
       backgroundColor: metaDarkBlue,
       body: ListView.builder(
+        itemCount: 10,
         physics: BouncingScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           if (index == 2) {
-            return GestureDetector(
-              onTap: () {
-                Navigation()
-                    .segue(page: Friend(), context: context, fullScreen: false);
-              },
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: metaLightBlue,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(12),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                'https://source.unsplash.com/1600x900/?person'),
-                          ),
-                        ),
-                        Column(
-                          children: [
-                            Shimmer.fromColors(
-                              baseColor: metaYellow,
-                              highlightColor: metaRed,
-                              child: Text(
-                                Faker().internet.userName(),
-                                style: GoogleFonts.sourceCodePro(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
+            return ProfileListItem(
+                username: Faker().internet.userName(),
+                isPro: true,
+                profileImageUrl: 'https://source.unsplash.com/1600x900/?person',
+                isOwner: false);
           } else {
-            return GestureDetector(
-              onTap: () {
-                Navigation()
-                    .segue(page: Friend(), context: context, fullScreen: false);
-              },
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: metaLightBlue,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(12),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                'https://source.unsplash.com/1600x900/?person'),
-                          ),
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              Faker().internet.userName(),
-                              style: GoogleFonts.sourceCodePro(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
+            return ProfileListItem(
+                username: Faker().internet.userName(),
+                isPro: false,
+                profileImageUrl: 'https://source.unsplash.com/1600x900/?person',
+                isOwner: false);
           }
         },
       ),
