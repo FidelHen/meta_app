@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta_app/components/modals/message_modal.dart';
-import 'package:meta_app/root/profile/friend.dart';
+import 'package:meta_app/screens/profile/friend.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/navigation.dart';
 import 'package:meta_app/utils/text_style.dart';

@@ -1,10 +1,10 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:meta_app/root/find_friends/find_friends.dart';
-import 'package:meta_app/root/home/home.dart';
-import 'package:meta_app/root/messages/messages_preview.dart';
-import 'package:meta_app/root/notifications/notifications.dart';
-import 'package:meta_app/root/profile/profile.dart';
+import 'package:meta_app/screens/find_friends/find_friends.dart';
+import 'package:meta_app/screens/home/home.dart';
+import 'package:meta_app/screens/messages/messages_preview.dart';
+import 'package:meta_app/screens/notifications/notifications.dart';
+import 'package:meta_app/screens/profile/profile.dart';
 import 'package:meta_app/utils/colors.dart';
 
 class Root extends StatefulWidget {

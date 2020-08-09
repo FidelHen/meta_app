@@ -2,7 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:meta_app/components/messages/messages_preview_tile.dart';
-import 'package:meta_app/root/messages/new_message.dart';
+import 'package:meta_app/screens/messages/new_message.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/navigation.dart';
 import 'package:meta_app/utils/text_style.dart';

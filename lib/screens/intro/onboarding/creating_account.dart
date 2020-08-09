@@ -1,7 +1,7 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:meta_app/components/FAB.dart';
-import 'package:meta_app/root/root.dart';
+import 'package:meta_app/screens/root.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/navigation.dart';

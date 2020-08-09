@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meta_app/root/tag_view.dart';
-import 'package:meta_app/root/tournaments/tournament_preview.dart';
+import 'package:meta_app/screens/tag_view.dart';
+import 'package:meta_app/screens/tournaments/tournament_preview.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/enums.dart';
 import 'package:meta_app/utils/get_platform_image.dart';

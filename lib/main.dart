@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:meta_app/root/root.dart';
+import 'package:meta_app/screens/intro/landing.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:overlay_support/overlay_support.dart';
 
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: metaDarkBlue,
             cursorColor: metaGreen,
             accentColor: Colors.transparent),
-        home: Root(),
+        home: Landing(),
       ),
     );
   }

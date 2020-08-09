@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:meta_app/components/FAB.dart';
 import 'package:meta_app/components/textFields.dart';
-import 'package:meta_app/root/intro/onboarding/creating_account.dart';
+import 'package:meta_app/screens/intro/onboarding/creating_account.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/navigation.dart';

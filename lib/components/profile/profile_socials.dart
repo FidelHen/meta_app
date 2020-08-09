@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta_app/models/social_button_model.dart';
-import 'package:meta_app/root/web_view.dart';
+import 'package:meta_app/screens/web_view.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/enums.dart';
 import 'package:meta_app/utils/navigation.dart';

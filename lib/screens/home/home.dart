@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:meta_app/components/modals/go_pro_modal.dart';
 import 'package:meta_app/components/tournaments/recommended_tournament.dart';
 import 'package:meta_app/components/tournaments/upcoming_tournament.dart';
-import 'package:meta_app/root/home/search.dart';
+import 'package:meta_app/screens/home/search.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/enums.dart';

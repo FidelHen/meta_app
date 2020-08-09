@@ -2,7 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:meta_app/components/modals/clip_modal.dart';
 import 'package:meta_app/components/modals/clip_owner_modal.dart';
-import 'package:meta_app/root/media_player.dart';
+import 'package:meta_app/screens/media_player.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/enums.dart';
 import 'package:meta_app/utils/navigation.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meta_app/root/messages/messages_view.dart';
+import 'package:meta_app/screens/messages/messages_view.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/navigation.dart';
 import 'package:meta_app/utils/text_style.dart';

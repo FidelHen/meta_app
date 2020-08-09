@@ -1,9 +1,9 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:meta_app/root/intro/landing.dart';
-import 'package:meta_app/root/settings/change_password.dart';
-import 'package:meta_app/root/settings/report_problem.dart';
-import 'package:meta_app/root/settings/terms_and_conditions.dart';
+import 'package:meta_app/screens/intro/landing.dart';
+import 'package:meta_app/screens/settings/change_password.dart';
+import 'package:meta_app/screens/settings/report_problem.dart';
+import 'package:meta_app/screens/settings/terms_and_conditions.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/navigation.dart';

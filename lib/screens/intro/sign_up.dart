@@ -1,28 +1,33 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:meta_app/components/FAB.dart';
 import 'package:meta_app/components/textFields.dart';
-import 'package:meta_app/root/intro/forgot_password.dart';
+import 'package:meta_app/screens/intro/onboarding/gamertags.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/navigation.dart';
 import 'package:meta_app/utils/text_style.dart';
 
-class Login extends StatefulWidget {
+class SignUp extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _LoginState extends State<Login> {
+class _SignUpState extends State<SignUp> {
   //TextFields
   TextEditingController emailController;
   TextEditingController passwordController;
   FocusNode emailNode;
   FocusNode passwordNode;
 
-  //Variables
+  //Keyboard
   bool keyboardIsHidden;
+
+  //Variables
+  bool isPasswordVisible;
+  Icon currentPasswordIcon;
 
   @override
   void initState() {
@@ -31,6 +36,13 @@ class _LoginState extends State<Login> {
     passwordController = TextEditingController();
     emailNode = FocusNode();
     passwordNode = FocusNode();
+
+    //Variables
+    isPasswordVisible = false;
+    currentPasswordIcon = Icon(
+      EvaIcons.eyeOutline,
+      color: Colors.white,
+    );
 
     //Keyboard
     keyboardIsHidden = true;
@@ -68,14 +80,14 @@ class _LoginState extends State<Login> {
               Navigator.pop(context);
             },
             icon: Icon(
-              EvaIcons.chevronDown,
+              EvaIcons.chevronLeft,
               color: Colors.white,
               size: 40,
             ),
           ),
           backgroundColor: metaDarkBlue,
           title: Text(
-            'We missed you',
+            'Welcome aboard',
             style: appBarTextStyle,
           ),
         ),
@@ -104,7 +116,7 @@ class _LoginState extends State<Login> {
                   focusedBorder: keyboardFocusedBorder,
                   errorBorder: keyboardErrorBorder,
                   border: OutlineInputBorder(),
-                  contentPadding: textFieldContentPadding,
+                  contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
                 ),
               ),
             ),
@@ -112,36 +124,32 @@ class _LoginState extends State<Login> {
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: TextField(
-                obscureText: true,
+                obscureText: !isPasswordVisible,
                 focusNode: passwordNode,
                 controller: passwordController,
                 keyboardType: TextInputType.visiblePassword,
                 cursorColor: metaGreen,
+                textInputAction: TextInputAction.done,
                 style: textFieldTextStyle,
                 decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: passwordAction,
+                    child: currentPasswordIcon,
+                  ),
                   enabledBorder: keyboardEnabledBorder,
                   focusedBorder: keyboardFocusedBorder,
                   errorBorder: keyboardErrorBorder,
                   border: OutlineInputBorder(),
-                  contentPadding: textFieldContentPadding,
+                  contentPadding: EdgeInsets.fromLTRB(12, 18, 12, 18),
                 ),
               ),
             ),
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  Navigation().segue(
-                      page: ForgotPassword(),
-                      context: context,
-                      fullScreen: false);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 25, 8, 12),
-                  child: Text(
-                    'Forgot password',
-                    style: smallButtonTextStyle,
-                  ),
-                ),
+            Padding(
+              padding: EdgeInsets.only(left: 8.0),
+              child: Text(
+                'Password must be minimum 8 characters',
+                style: GoogleFonts.openSans(
+                    color: Colors.white, fontStyle: FontStyle.italic),
               ),
             ),
           ]),
@@ -150,12 +158,33 @@ class _LoginState extends State<Login> {
             ? extendedFAB(
                 color: Colors.white,
                 context: context,
-                title: 'Login',
-                tag: 'reset',
-                onPressed: () {})
+                title: 'Sign up',
+                onPressed: () {
+                  Navigation().segueToRoot(
+                      page: Gamertags(), context: context, fullScreen: false);
+                })
             : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
+  }
+
+  //Functions
+  void passwordAction() {
+    if (isPasswordVisible) {
+      currentPasswordIcon = Icon(
+        EvaIcons.eyeOutline,
+        color: Colors.white,
+      );
+    } else {
+      currentPasswordIcon = Icon(
+        EvaIcons.eyeOff2,
+        color: Colors.white,
+      );
+    }
+
+    setState(() {
+      isPasswordVisible = !isPasswordVisible;
+    });
   }
 }
