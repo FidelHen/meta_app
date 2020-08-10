@@ -90,7 +90,7 @@ class _SettingsState extends State<Settings> {
                         borderRadius: new BorderRadius.circular(5.0),
                       ),
                       child: Text(
-                        'Logout',
+                        'Sign out',
                         style: smallButtonTextStyle,
                       )),
                 ),

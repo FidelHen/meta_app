@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meta_app/utils/colors.dart';
-import 'package:meta_app/utils/text_style.dart';
 import 'package:shimmer/shimmer.dart';
 
 class FriendToast extends StatelessWidget {
@@ -48,19 +47,6 @@ class FriendToast extends StatelessWidget {
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: FlatButton(
-                      onPressed: onView,
-                      child: Text(
-                        'View',
-                        style: smallButtonTextStyle,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(5.0),
-                      ),
                     ),
                   ),
                 ],

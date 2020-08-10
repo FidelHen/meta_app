@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:meta_app/components/FAB.dart';
+import 'package:meta_app/components/modals/gamertag_modal.dart';
 import 'package:meta_app/screens/intro/onboarding/update_profile.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
@@ -141,39 +142,46 @@ class _GamertagsState extends State<Gamertags> {
       backgroundImage = AssetImage('images/other_preview.png');
     }
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(5),
-      child: Container(
-        height: DeviceSize().getHeight(context) / 3.5,
-        child: AspectRatio(
-            aspectRatio: 4 / 5,
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: backgroundImage, fit: BoxFit.cover)),
-                ),
-                Container(
-                  color: Colors.black45,
-                ),
-                Center(
-                  child: icon != null
-                      ? Container(
-                          height: 40,
-                          width: 40,
-                          child: Image(
-                            image: icon,
-                          ),
-                        )
-                      : Text('Other',
-                          style: GoogleFonts.sourceCodePro(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 25)),
-                )
-              ],
-            )),
+    return GestureDetector(
+      onTap: () {
+        if (game != Games.Other) {
+          showGamertagModal(context: context, game: game);
+        } else {}
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(5),
+        child: Container(
+          height: DeviceSize().getHeight(context) / 3.5,
+          child: AspectRatio(
+              aspectRatio: 4 / 5,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: backgroundImage, fit: BoxFit.cover)),
+                  ),
+                  Container(
+                    color: Colors.black45,
+                  ),
+                  Center(
+                    child: icon != null
+                        ? Container(
+                            height: 40,
+                            width: 40,
+                            child: Image(
+                              image: icon,
+                            ),
+                          )
+                        : Text('Other',
+                            style: GoogleFonts.sourceCodePro(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 25)),
+                  )
+                ],
+              )),
+        ),
       ),
     );
   }
