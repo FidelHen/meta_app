@@ -18,6 +18,8 @@ String getPlatformImage({@required GamertagPlatform platform}) {
     return 'images/switch_logo.png';
   } else if (platform == GamertagPlatform.Xbox) {
     return 'images/xbox_logo.png';
+  } else if (platform == GamertagPlatform.Mac) {
+    return 'images/mac_logo.png';
   } else {
     return '';
   }

@@ -6,7 +6,7 @@ import 'package:meta_app/components/profile/profile_bio.dart';
 import 'package:meta_app/components/profile/profile_gamertags.dart';
 import 'package:meta_app/components/profile/profile_image.dart';
 import 'package:meta_app/components/video_clip.dart';
-import 'package:meta_app/models/gamertag.dart';
+import 'package:meta_app/models/gamertag_model.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/enums.dart';
@@ -91,7 +91,7 @@ class _FriendState extends State<Friend> {
           profileAction: ProfileActionOption.IsNotFriend, isViewerPro: false),
       ProfileGamertags(
         gamertagsList: [
-          Gamertag(
+          GamertagModel(
               platform: GamertagPlatform.LeagueOfLegends, gamertag: 'RedDot224')
         ],
         isBlurred: false,

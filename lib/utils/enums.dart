@@ -1,10 +1,3 @@
-enum Games {
-  LeagueOfLegends,
-  ModernWarfare,
-  Fortnite,
-  Other,
-}
-
 enum SocialMedia {
   Twitter,
   FBGaming,
@@ -27,6 +20,8 @@ enum GamertagPlatform {
   PC,
   Switch,
   Mobile,
+  Mac,
+  Other
 }
 
 enum ClipPlatform {

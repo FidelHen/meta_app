@@ -41,7 +41,7 @@ void showGoProModal({@required context}) {
                                 child: Text(
                                   'Go meta pro for premium features',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.sourceCodePro(
+                                  style: GoogleFonts.robotoMono(
                                       color: Colors.white,
                                       fontSize: 22,
                                       fontWeight: FontWeight.w700),

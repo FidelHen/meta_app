@@ -30,8 +30,8 @@ class Auth {
         'is_registered': false,
       }).then((_) async {
         //Store data locally-
-        final box = Hive.box('profile');
-        box.put('userUid', userUid);
+        final openBox = await Hive.openBox('profile');
+        openBox.put('userUid', userUid);
 
         stopLoading();
 

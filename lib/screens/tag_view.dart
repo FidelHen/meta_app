@@ -90,7 +90,7 @@ class _TagState extends State<Tag> {
                                   AssetImage('images/temp_avatar.png')),
                           title: Text(
                             'Fidelhen',
-                            style: GoogleFonts.sourceCodePro(
+                            style: GoogleFonts.robotoMono(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -203,7 +203,7 @@ class _TagState extends State<Tag> {
                                   children: [
                                     Text(
                                       '5v5',
-                                      style: GoogleFonts.sourceCodePro(
+                                      style: GoogleFonts.robotoMono(
                                         color: Colors.white,
                                         fontSize: 35,
                                         fontWeight: FontWeight.w900,

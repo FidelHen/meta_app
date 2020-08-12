@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
@@ -14,15 +15,27 @@ Future<void> main() async {
   Directory document = await getApplicationDocumentsDirectory();
   Hive.init(document.path);
 
-  //Hive box's
-  await Hive.openBox('profile');
-
   runApp(
     MyApp(),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    String host = Platform.isAndroid ? '10.0.2.2:8080' : 'localhost:8080';
+
+    Firestore.instance
+        .settings(host: host, sslEnabled: false, persistenceEnabled: false);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     //Only portrait mode

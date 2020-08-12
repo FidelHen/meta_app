@@ -72,7 +72,7 @@ class RecommendedTournament extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: GoogleFonts.sourceCodePro(
+                      style: GoogleFonts.robotoMono(
                         color: Colors.white,
                         fontSize: 35,
                         fontWeight: FontWeight.w900,

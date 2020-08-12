@@ -40,9 +40,9 @@ class InviteToast extends StatelessWidget {
                           padding: EdgeInsets.all(12.0),
                           child: Text(
                             'Tournament invite',
-                            style: GoogleFonts.sourceCodePro(
+                            style: GoogleFonts.robotoMono(
                                 color: Colors.white,
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
                         ),

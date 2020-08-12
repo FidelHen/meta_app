@@ -17,10 +17,12 @@ class Landing extends StatefulWidget {
 
 class _LandingState extends State<Landing> {
   //Variables
-  TextStyle titleTextStyle = GoogleFonts.sourceCodePro(
+  TextStyle titleTextStyle = GoogleFonts.robotoMono(
       color: Colors.white, fontSize: 25, fontWeight: FontWeight.w700);
   TextStyle descriptionTextStyle = GoogleFonts.openSans(
-      color: Colors.white, fontSize: 20, fontWeight: FontWeight.w300);
+      color: Colors.white.withOpacity(.8),
+      fontSize: 20,
+      fontWeight: FontWeight.w400);
 
   EdgeInsets infoPadding = EdgeInsets.fromLTRB(25, 5, 25, 15);
 
@@ -188,7 +190,7 @@ class _LandingState extends State<Landing> {
                         TextSpan(
                           text: 'Meta',
                           style: descriptionTextStyle.copyWith(
-                              fontWeight: FontWeight.w800),
+                              color: Colors.white, fontWeight: FontWeight.w800),
                         )
                       ]),
                 ),

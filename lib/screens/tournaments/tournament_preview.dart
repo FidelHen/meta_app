@@ -62,8 +62,8 @@ class _TournamentPreviewState extends State<TournamentPreview> {
             labelColor: Colors.white,
             unselectedLabelColor: Colors.grey,
             unselectedLabelStyle:
-                GoogleFonts.sourceCodePro(fontWeight: FontWeight.w500),
-            labelStyle: GoogleFonts.sourceCodePro(fontWeight: FontWeight.w600),
+                GoogleFonts.robotoMono(fontWeight: FontWeight.w500),
+            labelStyle: GoogleFonts.robotoMono(fontWeight: FontWeight.w600),
             indicatorColor: metaGreen,
             tabs: [
               Tab(text: "Overview"),
@@ -326,7 +326,7 @@ class _TournamentPreviewState extends State<TournamentPreview> {
                         children: [
                           Text(
                             username ?? '',
-                            style: GoogleFonts.sourceCodePro(
+                            style: GoogleFonts.robotoMono(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600),
@@ -395,7 +395,7 @@ class _TournamentPreviewState extends State<TournamentPreview> {
                     );
                   }),
               Text('VS',
-                  style: GoogleFonts.sourceCodePro(
+                  style: GoogleFonts.robotoMono(
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.w700)),

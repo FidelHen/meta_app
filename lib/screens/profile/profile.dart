@@ -6,7 +6,7 @@ import 'package:meta_app/components/profile/profile_gamertags.dart';
 import 'package:meta_app/components/profile/profile_image.dart';
 import 'package:meta_app/components/profile/profile_socials.dart';
 import 'package:meta_app/components/video_clip.dart';
-import 'package:meta_app/models/gamertag.dart';
+import 'package:meta_app/models/gamertag_model.dart';
 import 'package:meta_app/screens/profile/post_clip.dart';
 import 'package:meta_app/screens/settings/settings.dart';
 import 'package:meta_app/utils/colors.dart';
@@ -132,14 +132,16 @@ class _ProfileState extends State<Profile> {
       ),
       ProfileGamertags(
         gamertagsList: [
-          Gamertag(
+          GamertagModel(
               platform: GamertagPlatform.LeagueOfLegends,
               gamertag: 'Gainzville'),
-          Gamertag(
+          GamertagModel(
               platform: GamertagPlatform.ModernWarfare, gamertag: 'HenFidel'),
-          Gamertag(platform: GamertagPlatform.Fortnite, gamertag: 'FidelHen'),
-          Gamertag(platform: GamertagPlatform.PS4, gamertag: 'HenFidel'),
-          Gamertag(platform: GamertagPlatform.Switch, gamertag: 'Gainzville'),
+          GamertagModel(
+              platform: GamertagPlatform.Fortnite, gamertag: 'FidelHen'),
+          GamertagModel(platform: GamertagPlatform.PS4, gamertag: 'HenFidel'),
+          GamertagModel(
+              platform: GamertagPlatform.Switch, gamertag: 'Gainzville'),
         ],
         isBlurred: false,
       ),

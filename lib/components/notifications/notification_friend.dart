@@ -68,12 +68,12 @@ class _NotificationFriendState extends State<NotificationFriend> {
                       textAlign: TextAlign.start,
                       text: TextSpan(
                           text: widget.username,
-                          style: GoogleFonts.sourceCodePro(
+                          style: GoogleFonts.robotoMono(
                               color: Colors.white, fontWeight: FontWeight.w600),
                           children: [
                             TextSpan(
                               text: ' wants to be your friend',
-                              style: GoogleFonts.sourceCodePro(
+                              style: GoogleFonts.robotoMono(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400),
                             )

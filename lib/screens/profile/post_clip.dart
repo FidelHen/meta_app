@@ -88,8 +88,8 @@ class _PostClipState extends State<PostClip>
           labelColor: Colors.white,
           unselectedLabelColor: Colors.grey,
           unselectedLabelStyle:
-              GoogleFonts.sourceCodePro(fontWeight: FontWeight.w500),
-          labelStyle: GoogleFonts.sourceCodePro(fontWeight: FontWeight.w600),
+              GoogleFonts.robotoMono(fontWeight: FontWeight.w500),
+          labelStyle: GoogleFonts.robotoMono(fontWeight: FontWeight.w600),
           indicatorColor: metaGreen,
           tabs: [
             Tab(

@@ -104,7 +104,7 @@ void showMessageModal({@required context, bool isNewMessage}) {
                                           child: Center(
                                             child: Text(
                                               'RedDot224',
-                                              style: GoogleFonts.sourceCodePro(
+                                              style: GoogleFonts.robotoMono(
                                                   fontSize: 12,
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.w700),

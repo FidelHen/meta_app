@@ -119,7 +119,7 @@ class _UpcomingTournamentState extends State<UpcomingTournament> {
                     children: [
                       Text(
                         widget.title,
-                        style: GoogleFonts.sourceCodePro(
+                        style: GoogleFonts.robotoMono(
                           color: Colors.white,
                           fontSize: 35,
                           fontWeight: FontWeight.w900,

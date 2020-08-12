@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-TextStyle appBarTextStyle = GoogleFonts.sourceCodePro(
+TextStyle appBarTextStyle = GoogleFonts.robotoMono(
     color: Colors.white,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
     wordSpacing: -2,
     fontSize: 18);
 
@@ -21,18 +21,20 @@ TextStyle fabButtonTextStyle = GoogleFonts.openSans(
 TextStyle textFeidTitleTextStyle = GoogleFonts.openSans(
     color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600);
 TextStyle textFieldTextStyle =
-    GoogleFonts.sourceCodePro(color: Colors.white, wordSpacing: -2);
+    GoogleFonts.robotoMono(color: Colors.white, wordSpacing: -2);
 TextStyle textFieldDescriptionTextStyle =
     GoogleFonts.openSans(color: Colors.white, fontStyle: FontStyle.italic);
 
 //Onboarding screens text style
-TextStyle onboardingTitleTextStyle = GoogleFonts.sourceCodePro(
+TextStyle onboardingTitleTextStyle = GoogleFonts.robotoMono(
     color: Colors.white,
     wordSpacing: -2,
     fontSize: 22,
     fontWeight: FontWeight.w700);
-TextStyle onboardingDescriptionTextStyle =
-    GoogleFonts.openSans(color: Colors.white, fontSize: 18);
+TextStyle onboardingDescriptionTextStyle = GoogleFonts.openSans(
+    color: Colors.white.withOpacity(.8),
+    fontSize: 18,
+    fontWeight: FontWeight.w400);
 
 //Profile text style
 TextStyle profileBioTextStyle =
@@ -41,12 +43,12 @@ TextStyle profileActionButtonTextStlye =
     GoogleFonts.openSans(color: Colors.white, fontWeight: FontWeight.w600);
 TextStyle profileGamertagTextStyle = GoogleFonts.openSans(
     color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15);
-TextStyle profileListItemTextStyle = GoogleFonts.sourceCodePro(
+TextStyle profileListItemTextStyle = GoogleFonts.robotoMono(
     color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600);
 
 //Video clip text style
 TextStyle clipUsernameTextStyle =
-    GoogleFonts.sourceCodePro(color: Colors.white, fontWeight: FontWeight.w600);
+    GoogleFonts.robotoMono(color: Colors.white, fontWeight: FontWeight.w600);
 TextStyle clipTagsTextStyle = GoogleFonts.openSans(
     fontSize: 12, color: Colors.white, fontWeight: FontWeight.w700);
 

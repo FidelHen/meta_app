@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:meta_app/utils/enums.dart';
 
-class Gamertag {
+class GamertagModel {
   //Constructor
-  Gamertag({@required this.platform, @required this.gamertag});
+  GamertagModel({@required this.platform, @required this.gamertag, this.game});
 
   //Variables
   final GamertagPlatform platform;
   final String gamertag;
+  final GamertagPlatform game;
 }

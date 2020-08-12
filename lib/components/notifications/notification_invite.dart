@@ -36,12 +36,12 @@ class NotificationInvite extends StatelessWidget {
                       textAlign: TextAlign.start,
                       text: TextSpan(
                           text: username,
-                          style: GoogleFonts.sourceCodePro(
+                          style: GoogleFonts.robotoMono(
                               color: Colors.white, fontWeight: FontWeight.w600),
                           children: [
                             TextSpan(
                               text: ' invited you to a tournament',
-                              style: GoogleFonts.sourceCodePro(
+                              style: GoogleFonts.robotoMono(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400),
                             )

@@ -1,17 +1,20 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/enums.dart';
-import 'package:meta_app/utils/get_platform_image.dart';
 import 'package:meta_app/utils/text_style.dart';
-import 'package:meta_app/utils/user.dart';
 
-void showGamertagModal({@required context, @required Games game}) {
+void showGamertagModal(
+    {@required context,
+    @required GamertagPlatform game,
+    @required Function callback,
+    @required GamertagPlatform platform}) {
+  //Variables
+  String gamertag = '';
+
   //Widgets
   Widget textFieldIcon() {
-    if (game == Games.ModernWarfare) {
+    if (game == GamertagPlatform.ModernWarfare) {
       return Padding(
         padding: EdgeInsets.only(left: 12),
         child: Image.asset(
@@ -19,7 +22,7 @@ void showGamertagModal({@required context, @required Games game}) {
           scale: 32,
         ),
       );
-    } else if (game == Games.LeagueOfLegends) {
+    } else if (game == GamertagPlatform.LeagueOfLegends) {
       return Padding(
         padding: EdgeInsets.only(left: 12),
         child: Image.asset(
@@ -27,7 +30,7 @@ void showGamertagModal({@required context, @required Games game}) {
           scale: 38,
         ),
       );
-    } else if (game == Games.Fortnite) {
+    } else if (game == GamertagPlatform.Fortnite) {
       return Padding(
         padding: EdgeInsets.only(left: 12),
         child: Image.asset(
@@ -40,66 +43,6 @@ void showGamertagModal({@required context, @required Games game}) {
     }
   }
 
-  Widget platformOption() {
-    //Variables
-    List<GamertagPlatform> platformImages = [];
-
-    //Conditionals
-    if (game == Games.ModernWarfare) {
-      platformImages = [
-        GamertagPlatform.PC,
-        GamertagPlatform.PS4,
-        GamertagPlatform.Xbox,
-      ];
-    } else if (game == Games.Fortnite) {
-      platformImages = [
-        GamertagPlatform.PC,
-        GamertagPlatform.PS4,
-        GamertagPlatform.Xbox,
-        GamertagPlatform.Switch,
-        GamertagPlatform.Mobile,
-      ];
-    }
-
-    //Widget
-    if (game == Games.LeagueOfLegends) {
-      return Container();
-    } else {
-      return Container(
-        height: 70,
-        child: ListView.builder(
-          itemCount: platformImages.length,
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: EdgeInsets.only(top: 8, right: 20, left: 20),
-              child: Column(
-                children: [
-                  Container(
-                    width: 30,
-                    height: 30,
-                    child: Image.asset(
-                      getPlatformImage(platform: platformImages[index]),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      platformImages[index].toString().split('.')[1],
-                      style: GoogleFonts.openSans(
-                          color: Colors.white, fontWeight: FontWeight.w600),
-                    ),
-                  )
-                ],
-              ),
-            );
-          },
-        ),
-      );
-    }
-  }
-
   //Modals
   showModalBottomSheet(
       context: context,
@@ -107,9 +50,7 @@ void showGamertagModal({@required context, @required Games game}) {
       backgroundColor: Colors.transparent,
       builder: (context) {
         return Container(
-          height: game == Games.LeagueOfLegends
-              ? 100 + MediaQuery.of(context).viewInsets.bottom
-              : 170 + MediaQuery.of(context).viewInsets.bottom,
+          height: 150 + MediaQuery.of(context).viewInsets.bottom,
           decoration: BoxDecoration(
             color: metaLightBlue,
             borderRadius: BorderRadius.only(
@@ -126,9 +67,25 @@ void showGamertagModal({@required context, @required Games game}) {
               ),
               child: Column(
                 children: [
-                  platformOption(),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        callback(
+                            game: game, gamertag: gamertag, platform: platform);
+                      },
+                      child: Text(
+                        'Done',
+                        style: smallButtonTextStyle.copyWith(color: metaGreen),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(5.0),
+                      ),
+                    ),
+                  ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(22, 12, 22, 12),
+                    padding: EdgeInsets.fromLTRB(22, 4, 22, 12),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -142,11 +99,15 @@ void showGamertagModal({@required context, @required Games game}) {
                             child: TextField(
                               autofocus: true,
                               style: textFieldTextStyle,
+                              onChanged: (value) {
+                                gamertag = value;
+                              },
                               onSubmitted: (value) {
-                                User().getUserUid().then((uid) {
-                                  print(uid);
-                                });
                                 Navigator.pop(context);
+                                callback(
+                                    game: game,
+                                    gamertag: value,
+                                    platform: platform);
                               },
                               cursorColor: metaGreen,
                               decoration: InputDecoration(

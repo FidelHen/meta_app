@@ -6,7 +6,7 @@ import 'package:meta_app/components/profile/profile_gamertags.dart';
 import 'package:meta_app/components/profile/profile_image_choice.dart';
 import 'package:meta_app/components/profile/profile_socials.dart';
 import 'package:meta_app/components/video_clip.dart';
-import 'package:meta_app/models/gamertag.dart';
+import 'package:meta_app/models/gamertag_model.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/enums.dart';
 import 'package:shimmer/shimmer.dart';
@@ -106,7 +106,7 @@ class _FindFriendsState extends State<FindFriends> {
                       twitterUrl: null),
                   ProfileGamertags(
                     gamertagsList: [
-                      Gamertag(
+                      GamertagModel(
                           platform: GamertagPlatform.LeagueOfLegends,
                           gamertag: 'Dead_Eye20')
                     ],

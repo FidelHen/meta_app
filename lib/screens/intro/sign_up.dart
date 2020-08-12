@@ -10,12 +10,9 @@ import 'package:meta_app/components/toast/error_toast.dart';
 import 'package:meta_app/utils/auth.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
-import 'package:meta_app/utils/navigation.dart';
 import 'package:meta_app/utils/service.dart';
 import 'package:meta_app/utils/text_style.dart';
 import 'package:overlay_support/overlay_support.dart';
-
-import 'onboarding/gamertags.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -177,10 +174,7 @@ class _SignUpState extends State<SignUp> {
                   context: context,
                   title: 'Sign up',
                   onPressed: () {
-                    // createAccout();
-                    //Navigate to onboarding
-                    Navigation().segueToRoot(
-                        page: Gamertags(), context: context, fullScreen: false);
+                    createAccout();
                   })
               : null,
           floatingActionButtonLocation:

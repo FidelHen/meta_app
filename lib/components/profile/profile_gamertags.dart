@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:meta_app/models/gamertag.dart';
+import 'package:meta_app/models/gamertag_model.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/get_platform_image.dart';
@@ -12,7 +12,7 @@ class ProfileGamertags extends StatefulWidget {
   ProfileGamertags({@required this.gamertagsList, @required this.isBlurred});
 
   //Varibles
-  final List<Gamertag> gamertagsList;
+  final List<GamertagModel> gamertagsList;
   final bool isBlurred;
 
   @override
@@ -21,7 +21,7 @@ class ProfileGamertags extends StatefulWidget {
 
 class _ProfileGamertagsState extends State<ProfileGamertags> {
   //Variables
-  List<Gamertag> currentGamertags;
+  List<GamertagModel> currentGamertags;
   bool currentlyBlurred;
 
   @override

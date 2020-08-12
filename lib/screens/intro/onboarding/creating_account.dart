@@ -1,13 +1,31 @@
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:meta_app/components/FAB.dart';
+import 'package:meta_app/models/gamertag_model.dart';
 import 'package:meta_app/screens/root.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/navigation.dart';
 import 'package:meta_app/utils/text_style.dart';
+import 'package:meta_app/utils/user.dart';
 
 class CreatingAccount extends StatefulWidget {
+  //Constructor
+  CreatingAccount(
+      {@required this.bio,
+      @required this.gamertags,
+      @required this.profileImage,
+      @required this.username});
+
+  //Variables
+  final String username;
+  final String bio;
+  final File profileImage;
+  final List<GamertagModel> gamertags;
+
   @override
   _CreatingAccountState createState() => _CreatingAccountState();
 }
@@ -23,26 +41,13 @@ class _CreatingAccountState extends State<CreatingAccount> {
   @override
   void initState() {
     //Variables
-    step = 1;
-    done = false;
-
-    //Functions
-    updateText();
-
-    //Testing delays
-    Future.delayed(Duration(seconds: 2)).then((_) {
-      setState(() {
-        step = 2;
-        updateText();
-      });
+    setState(() {
+      step = 1;
+      done = false;
+      updateText();
     });
-    Future.delayed(Duration(seconds: 4)).then((_) {
-      setState(() {
-        step = 3;
-        done = true;
-        updateText();
-      });
-    });
+
+    uploadData();
     super.initState();
   }
 
@@ -85,13 +90,21 @@ class _CreatingAccountState extends State<CreatingAccount> {
                     SizedBox(
                       height: DeviceSize().getHeight(context) / 5,
                     ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: AnimatedContainer(
-                        duration: Duration(seconds: 3),
-                        width: DeviceSize().getHeight(context) * 0.15,
-                        child: Image.asset(
-                          'images/temp_avatar.png',
+                    Container(
+                      width: DeviceSize().getHeight(context) * 0.15,
+                      height: DeviceSize().getHeight(context) * 0.15,
+                      child: ClipOval(
+                        child: AnimatedContainer(
+                          duration: Duration(seconds: 3),
+                          width: DeviceSize().getHeight(context) * 0.15,
+                          child: widget.profileImage != null
+                              ? Image.file(
+                                  widget.profileImage,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.asset(
+                                  'images/temp_avatar.png',
+                                ),
                         ),
                       ),
                     ),
@@ -125,6 +138,67 @@ class _CreatingAccountState extends State<CreatingAccount> {
   }
 
   //Functions
+  Future<void> uploadData() async {
+    //Variables
+    String imageUrl;
+    String uid = await User().getUid();
+
+    //Firebase Storage
+    if (widget.profileImage != null) {
+      final StorageReference storageRef =
+          FirebaseStorage.instance.ref().child('users/$uid/profile_image.jpg');
+      final StorageUploadTask uploadTask =
+          storageRef.putFile(widget.profileImage);
+      final StorageTaskSnapshot completed = await uploadTask.onComplete;
+
+      await completed.ref.getDownloadURL().then((url) {
+        imageUrl = url;
+      });
+    }
+
+    //Add some delaying
+    await Future.delayed(Duration(seconds: 1));
+
+    //Change UI
+    setState(() {
+      step = 2;
+      updateText();
+    });
+
+    //Firestore
+    final batch = Firestore.instance.batch();
+    final firestorRef = Firestore.instance.collection('users').document(uid);
+
+    batch.setData(
+        firestorRef,
+        {
+          'username': widget.username,
+          'bio': widget.bio,
+          'profile_image': imageUrl ?? '',
+        },
+        merge: true);
+
+    widget.gamertags.forEach((element) {
+      batch.setData(
+          firestorRef.collection('gamertags').document(element.game.toString()),
+          {
+            'gamertag': element.gamertag,
+            'game': element.game.toString(),
+            'platform': element.platform.toString()
+          },
+          merge: true);
+    });
+
+    batch.commit().whenComplete(() async {
+      await Future.delayed(Duration(seconds: 3));
+      setState(() {
+        step = 3;
+        done = true;
+        updateText();
+      });
+    });
+  }
+
   void updateText() {
     if (step == 1) {
       setState(() {

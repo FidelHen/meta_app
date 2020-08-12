@@ -175,7 +175,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               padding: EdgeInsets.all(8.0),
                               child: Text(
                                 Faker().internet.userName(),
-                                style: GoogleFonts.sourceCodePro(
+                                style: GoogleFonts.robotoMono(
                                     color: Colors.white,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600),
