@@ -189,7 +189,7 @@ class _CreatingAccountState extends State<CreatingAccount> {
           merge: true);
     });
 
-    batch.commit().whenComplete(() async {
+    batch.commit().then((_) async {
       await Future.delayed(Duration(seconds: 3));
       setState(() {
         step = 3;

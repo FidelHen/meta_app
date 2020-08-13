@@ -1,10 +1,10 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:meta_app/components/FAB.dart';
+import 'package:meta_app/components/loading_progress_indicator.dart';
 import 'package:meta_app/components/textFields.dart';
 import 'package:meta_app/components/toast/error_toast.dart';
 import 'package:meta_app/utils/auth.dart';
@@ -76,12 +76,7 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return LoadingOverlay(
       isLoading: isLoading,
-      progressIndicator: Container(
-          height: 50,
-          child: SpinKitDoubleBounce(
-            size: 40,
-            color: Colors.white,
-          )),
+      progressIndicator: LoadingProgressIndicator(),
       child: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();

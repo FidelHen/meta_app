@@ -39,7 +39,7 @@ class _LandingState extends State<Landing> {
                     .segue(page: Login(), context: context, fullScreen: true);
               },
               child: Text(
-                'Log in',
+                'Login',
                 style: smallButtonTextStyle,
               ),
               shape: RoundedRectangleBorder(

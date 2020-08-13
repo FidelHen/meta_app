@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:hive/hive.dart';
 import 'package:meta_app/screens/intro/landing.dart';
+import 'package:meta_app/screens/root.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:path_provider/path_provider.dart';
@@ -62,7 +64,20 @@ class _MyAppState extends State<MyApp> {
             backgroundColor: metaDarkBlue,
             cursorColor: metaGreen,
             accentColor: Colors.transparent),
-        home: Landing(),
+        home: FutureBuilder(
+          future: FirebaseAuth.instance.currentUser(),
+          builder: (BuildContext context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return Container();
+            } else {
+              if (snapshot.data != null) {
+                return Root();
+              } else {
+                return Landing();
+              }
+            }
+          },
+        ),
       ),
     );
   }
