@@ -48,8 +48,16 @@ class Navigation {
     }
   }
 
-  void fadeSegue({@required Widget page, @required BuildContext context}) {
-    Navigator.push(context, FadeRoute(page: page));
+  void fadeSegue(
+      {@required Widget page,
+      @required BuildContext context,
+      @required bool segueToRoot}) {
+    if (segueToRoot) {
+      Navigator.pushAndRemoveUntil(
+          context, FadeRoute(page: page), (Route<dynamic> route) => false);
+    } else {
+      Navigator.push(context, FadeRoute(page: page));
+    }
   }
 }
 

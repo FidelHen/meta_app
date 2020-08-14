@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:meta_app/components/FAB.dart';
 import 'package:meta_app/models/gamertag_model.dart';
 import 'package:meta_app/screens/root.dart';
@@ -184,13 +185,17 @@ class _CreatingAccountState extends State<CreatingAccount> {
           {
             'gamertag': element.gamertag,
             'game': element.game.toString(),
-            'platform': element.platform.toString()
+            'platform': element.platform.toString(),
+            'is_registered': true
           },
           merge: true);
     });
 
     batch.commit().then((_) async {
-      await Future.delayed(Duration(seconds: 3));
+      await Future.delayed(Duration(seconds: 2));
+      //Hive
+      Hive.box('profile').put('is_registered', true);
+      //Update statu
       setState(() {
         step = 3;
         done = true;
