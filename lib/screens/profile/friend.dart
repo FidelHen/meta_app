@@ -92,7 +92,9 @@ class _FriendState extends State<Friend> {
       ProfileGamertags(
         gamertagsList: [
           GamertagModel(
-              platform: GamertagPlatform.LeagueOfLegends, gamertag: 'RedDot224')
+              platform: GamertagPlatform.LeagueOfLegends,
+              gamertag: 'RedDot224',
+              game: GamertagPlatform.LeagueOfLegends)
         ],
         isBlurred: false,
       ),
@@ -108,6 +110,7 @@ class _FriendState extends State<Friend> {
             'https://gamespot1.cbsistatic.com/uploads/screen_kubrick/1578/15789366/3581138-3566212-modern%20warfare%20slower%20movement.jpg',
         clipPlatform: ClipPlatform.Youtube,
         videoUrl: 'https://www.youtube.com/watch?v=Y-YY24c_97I',
+        videoUid: '1',
       ),
     ];
   }

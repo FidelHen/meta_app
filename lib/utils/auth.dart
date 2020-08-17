@@ -132,4 +132,12 @@ class Auth {
       });
     }
   }
+
+  Future<bool> usernameAlreadyInUse({@required String username}) async {
+    final DocumentSnapshot document = await Firestore.instance
+        .collection('usernames')
+        .document(username)
+        .get();
+    return document.exists;
+  }
 }

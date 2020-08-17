@@ -27,12 +27,15 @@ dependencies:
   flutter_spinkit: ^4.1.2+1
   flare_flutter: ^2.0.3
   flutter_tags: ^0.4.8+2
+  webview_flutter: ^0.3.22+1
+  http: ^0.12.2
   youtube_player_flutter: ^7.0.0+5
   image_picker: 0.6.7+4
   like_button: ^1.0.1
   hive: ^1.4.2
-  email_validator: ^1.0.5
+  regexed_validator: ^1.0.4
   adaptive_dialog: ^0.7.5+3
+  enum_to_string: ^1.0.9
   #firebase
   firebase_storage: ^3.1.6
   firebase_core: ^0.4.5

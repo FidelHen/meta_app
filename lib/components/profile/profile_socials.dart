@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meta_app/models/social_button_model.dart';
+import 'package:meta_app/models/social_media_model.dart';
 import 'package:meta_app/screens/web_view.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/enums.dart';
@@ -7,17 +7,12 @@ import 'package:meta_app/utils/navigation.dart';
 
 class ProfileSocials extends StatefulWidget {
   //Constructor
-  ProfileSocials(
-      {@required this.twitchUrl,
-      @required this.fbGamingUrl,
-      @required this.youtubeUrl,
-      @required this.twitterUrl});
+  ProfileSocials({
+    @required this.socalMedias,
+  });
 
   //Variables
-  final String twitchUrl;
-  final String fbGamingUrl;
-  final String youtubeUrl;
-  final String twitterUrl;
+  final List<SocialMediaModel> socalMedias;
 
   @override
   _ProfileSocialsState createState() => _ProfileSocialsState();
@@ -25,13 +20,11 @@ class ProfileSocials extends StatefulWidget {
 
 class _ProfileSocialsState extends State<ProfileSocials> {
   //Variables
-  List<SocialButtonModel> socials = [];
-
+  List<SocialMediaModel> socials = [];
   @override
   void initState() {
     //Functions
-    checkSocials();
-
+    validateSocialLinks();
     super.initState();
   }
 
@@ -52,7 +45,8 @@ class _ProfileSocialsState extends State<ProfileSocials> {
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
                     return socialButton(
-                        social: socials[index].social, url: socials[index].url);
+                        social: socials[index].platform,
+                        url: socials[index].url);
                   }),
             ],
           ),
@@ -61,6 +55,29 @@ class _ProfileSocialsState extends State<ProfileSocials> {
     } else {
       return Container();
     }
+  }
+
+  //Functions
+  void validateSocialLinks() {
+    widget.socalMedias.forEach((element) {
+      //Variables
+      final SocialMedia platform = element.platform;
+      final String url = element.url;
+
+      //Conditionals
+      if (platform == SocialMedia.Youtube && url != '') {
+        socials.add(SocialMediaModel(platform: platform, url: url));
+      } else if (platform == SocialMedia.FBGaming &&
+          url != 'https://www.facebook.com/gaming/') {
+        socials.add(SocialMediaModel(platform: platform, url: url));
+      } else if (platform == SocialMedia.Twitch &&
+          url != 'https://www.twitch.tv/') {
+        socials.add(SocialMediaModel(platform: platform, url: url));
+      } else if (platform == SocialMedia.Twitter &&
+          url != 'https://twitter.com/') {
+        socials.add(SocialMediaModel(platform: platform, url: url));
+      }
+    });
   }
 
   //Widgets
@@ -116,25 +133,5 @@ class _ProfileSocialsState extends State<ProfileSocials> {
         ),
       ),
     );
-  }
-
-  //Functions
-  void checkSocials() {
-    if (widget.fbGamingUrl != null) {
-      socials.add(SocialButtonModel(
-          social: SocialMedia.FBGaming, url: widget.fbGamingUrl));
-    }
-    if (widget.twitchUrl != null) {
-      socials.add(
-          SocialButtonModel(social: SocialMedia.Twitch, url: widget.twitchUrl));
-    }
-    if (widget.twitterUrl != null) {
-      socials.add(SocialButtonModel(
-          social: SocialMedia.Twitter, url: widget.twitterUrl));
-    }
-    if (widget.youtubeUrl != null) {
-      socials.add(SocialButtonModel(
-          social: SocialMedia.Youtube, url: widget.youtubeUrl));
-    }
   }
 }

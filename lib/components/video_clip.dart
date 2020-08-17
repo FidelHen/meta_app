@@ -17,6 +17,7 @@ class VideoClip extends StatefulWidget {
       @required this.previewImageUrl,
       @required this.isOwner,
       @required this.clipPlatform,
+      @required this.videoUid,
       @required this.videoUrl});
 
   //Variables
@@ -27,6 +28,7 @@ class VideoClip extends StatefulWidget {
   final ClipPlatform clipPlatform;
   final bool isOwner;
   final List<String> tags;
+  final String videoUid;
 
   @override
   _VideoClipState createState() => _VideoClipState();

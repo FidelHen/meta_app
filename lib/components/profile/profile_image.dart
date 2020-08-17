@@ -27,7 +27,7 @@ class ProfileImage extends StatelessWidget {
                   height: DeviceSize().getWidth(context) * 0.25,
                   width: DeviceSize().getWidth(context) * 0.25,
                   color: Colors.grey,
-                  child: profileImageUrl != null
+                  child: profileImageUrl.trim().length != 0
                       ? Image.network(
                           profileImageUrl,
                           fit: BoxFit.cover,

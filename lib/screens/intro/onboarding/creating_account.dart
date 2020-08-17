@@ -176,6 +176,7 @@ class _CreatingAccountState extends State<CreatingAccount> {
           'username': widget.username,
           'bio': widget.bio,
           'profile_image': imageUrl ?? '',
+          'is_registered': true
         },
         merge: true);
 
@@ -186,7 +187,6 @@ class _CreatingAccountState extends State<CreatingAccount> {
             'gamertag': element.gamertag,
             'game': element.game.toString(),
             'platform': element.platform.toString(),
-            'is_registered': true
           },
           merge: true);
     });

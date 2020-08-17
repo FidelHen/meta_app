@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:meta_app/components/loading_progress_indicator.dart';
 import 'package:meta_app/components/profile/profile_action_buttons.dart';
 import 'package:meta_app/components/profile/profile_bio.dart';
 import 'package:meta_app/components/profile/profile_gamertags.dart';
@@ -7,6 +9,8 @@ import 'package:meta_app/components/profile/profile_image.dart';
 import 'package:meta_app/components/profile/profile_socials.dart';
 import 'package:meta_app/components/video_clip.dart';
 import 'package:meta_app/models/gamertag_model.dart';
+import 'package:meta_app/models/profile_model.dart';
+import 'package:meta_app/models/social_media_model.dart';
 import 'package:meta_app/screens/profile/post_clip.dart';
 import 'package:meta_app/screens/settings/settings.dart';
 import 'package:meta_app/utils/colors.dart';
@@ -14,7 +18,9 @@ import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/enums.dart';
 import 'package:meta_app/utils/navigation.dart';
 import 'package:meta_app/utils/text_style.dart';
+import 'package:meta_app/utils/user.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:http/http.dart' as http;
 
 class Profile extends StatefulWidget {
   @override
@@ -27,8 +33,9 @@ class _ProfileState extends State<Profile> {
 
   //Variables
   bool fabIsHidden;
+  bool isLoading;
   String username;
-  String profileImageUrl;
+  ProfileModel profileData;
 
   @override
   void initState() {
@@ -37,11 +44,12 @@ class _ProfileState extends State<Profile> {
 
     //Varibles
     fabIsHidden = false;
-    username = 'Fidelhen';
-    profileImageUrl = null;
+    username = '';
+    isLoading = true;
 
     //Functions
     scrollControllerListener();
+    getData();
 
     super.initState();
   }
@@ -90,19 +98,25 @@ class _ProfileState extends State<Profile> {
           )
         ],
       ),
-      body: Container(
-        width: DeviceSize().getWidth(context),
-        child: ListView(
-          controller: listScrollController,
-          physics: BouncingScrollPhysics(),
-          children: buildProfile(),
-        ),
-      ),
+      body: isLoading
+          ? Center(child: LoadingProgressIndicator())
+          : Container(
+              width: DeviceSize().getWidth(context),
+              child: ListView(
+                controller: listScrollController,
+                physics: BouncingScrollPhysics(),
+                children: buildProfile(),
+              ),
+            ),
       floatingActionButton: !fabIsHidden
           ? FloatingActionButton(
               onPressed: () {
                 Navigation().segue(
-                    page: PostClip(), context: context, fullScreen: true);
+                    page: PostClip(
+                      profileData: profileData,
+                    ),
+                    context: context,
+                    fullScreen: true);
               },
               backgroundColor: metaYellow,
               child: Icon(EvaIcons.flash, color: Colors.white))
@@ -114,35 +128,22 @@ class _ProfileState extends State<Profile> {
   List<Widget> buildProfile() {
     return [
       ProfileImage(
-        profileImageUrl: profileImageUrl,
+        profileImageUrl: profileData.profileImageUrl,
       ),
       ProfileBio(
-        bio:
-            'Stream every day on Twitch! Looking for aggro players on COD, DM me if you’re down!',
+        bio: profileData.bio ?? '',
       ),
       ProfileSocials(
-          twitchUrl: 'https://www.twitch.tv/nickmercs',
-          fbGamingUrl:
-              'https://www.facebook.com/OfficialY8/videos/4228325127207583/',
-          youtubeUrl: 'https://www.youtube.com/user/TheRealNICKMERCS',
-          twitterUrl: 'https://twitter.com/NICKMERCS'),
+        socalMedias: profileData.socials,
+      ),
       ProfileActionButtons(
         profileAction: ProfileActionOption.IsOwner,
         isViewerPro: false,
+        profileData: profileData,
+        profileUpdateCallback: getData,
       ),
       ProfileGamertags(
-        gamertagsList: [
-          GamertagModel(
-              platform: GamertagPlatform.LeagueOfLegends,
-              gamertag: 'Gainzville'),
-          GamertagModel(
-              platform: GamertagPlatform.ModernWarfare, gamertag: 'HenFidel'),
-          GamertagModel(
-              platform: GamertagPlatform.Fortnite, gamertag: 'FidelHen'),
-          GamertagModel(platform: GamertagPlatform.PS4, gamertag: 'HenFidel'),
-          GamertagModel(
-              platform: GamertagPlatform.Switch, gamertag: 'Gainzville'),
-        ],
+        gamertagsList: profileData.gamertags,
         isBlurred: false,
       ),
       SizedBox(
@@ -150,18 +151,63 @@ class _ProfileState extends State<Profile> {
       ),
       VideoClip(
         username: 'Fidelhen',
-        profileImageUrl: profileImageUrl,
+        profileImageUrl: profileData.profileImageUrl,
         tags: ['League', 'Trolling', 'LOL'],
         isOwner: true,
         previewImageUrl:
             'https://img.redbull.com/images/c_crop,x_225,y_0,h_958,w_1437/c_fill,w_1500,h_1000/q_auto,f_auto/redbullcom/2017/10/11/f64b8633-e848-4afa-9791-9da869f7bfd7/league-of-legends-champions',
         clipPlatform: ClipPlatform.Youtube,
         videoUrl: 'https://www.youtube.com/watch?v=6LpA7_-Srqg',
+        videoUid: '1',
       ),
     ];
   }
 
   //Functions
+  void getData() async {
+    //Update UI
+    setState(() {
+      isLoading = true;
+      username = '';
+    });
+    //Variables & Getting data
+    final String uid = await User().getUid();
+    final DocumentSnapshot document = await User().getProfileData(uid: uid);
+    final List<GamertagModel> gamertags = await User().getGamertags(uid: uid);
+    final List<SocialMediaModel> socials = await User().getSocials(uid: uid);
+    final data = document.data;
+
+    //Set profile data
+    profileData = ProfileModel(
+        bio: data['bio'] ?? '',
+        gamertags: [],
+        profileImageUrl: data['profile_image'] ?? '',
+        socials: [],
+        uid: data['uid'],
+        username: data['username'] ?? '',
+        videoUids: []);
+
+    //Set gamertags
+    gamertags.forEach((element) {
+      profileData.gamertags.add(GamertagModel(
+          platform: element.platform,
+          gamertag: element.gamertag,
+          game: element.game));
+    });
+
+    //Set Socials
+    socials.forEach((element) {
+      profileData.socials
+          .add(SocialMediaModel(platform: element.platform, url: element.url));
+    });
+
+    //Update UI
+    setState(() {
+      isLoading = false;
+      username = profileData.username;
+    });
+  }
+
   void scrollControllerListener() {
     listScrollController.addListener(() {
       if (listScrollController.position.maxScrollExtent ==

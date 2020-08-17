@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meta_app/components/modals/message_modal.dart';
 import 'package:meta_app/components/toast/success_toast.dart';
 import 'package:meta_app/components/toast/warning_toast.dart';
+import 'package:meta_app/models/profile_model.dart';
 import 'package:meta_app/screens/profile/edit_profile.dart';
 import 'package:meta_app/screens/profile/friends_list.dart';
 import 'package:meta_app/utils/colors.dart';
@@ -14,11 +15,16 @@ import 'package:overlay_support/overlay_support.dart';
 class ProfileActionButtons extends StatefulWidget {
   //Constructor
   ProfileActionButtons(
-      {@required this.profileAction, @required this.isViewerPro});
+      {@required this.profileAction,
+      @required this.isViewerPro,
+      @required this.profileUpdateCallback,
+      @required this.profileData});
 
   //Variables
   final ProfileActionOption profileAction;
   final bool isViewerPro;
+  final ProfileModel profileData;
+  final Function profileUpdateCallback;
 
   @override
   _ProfileActionButtonsState createState() => _ProfileActionButtonsState();
@@ -68,8 +74,13 @@ class _ProfileActionButtonsState extends State<ProfileActionButtons> {
         ),
         onPressed: () {
           if (widget.profileAction == ProfileActionOption.IsOwner) {
-            Navigation()
-                .segue(page: EditProfile(), context: context, fullScreen: true);
+            Navigation().segue(
+                page: EditProfile(
+                  profileData: widget.profileData,
+                  callback: widget.profileUpdateCallback,
+                ),
+                context: context,
+                fullScreen: true);
           } else if (widget.profileAction == ProfileActionOption.IsFriend) {
             showMessageModal(context: context);
           } else {

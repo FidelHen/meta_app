@@ -1,7 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -28,6 +27,7 @@ class _MediaPlayerState extends State<MediaPlayer> {
   void initState() {
     //Variables
     videoIsExpanded = false;
+
     //Functions
     startVideo();
     super.initState();
@@ -54,10 +54,6 @@ class _MediaPlayerState extends State<MediaPlayer> {
                     playedColor: metaRed,
                     handleColor: metaRed,
                     backgroundColor: Colors.white38),
-                bufferIndicator: SpinKitChasingDots(
-                  color: Colors.white,
-                  size: 50.0,
-                ),
                 onReady: () {},
               ),
             ),

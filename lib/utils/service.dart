@@ -1,13 +1,18 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:regexed_validator/regexed_validator.dart';
 
 class Service {
   bool emailValidator({@required String email}) {
-    return EmailValidator.validate(email);
+    return validator.email(email);
   }
 
   bool usernameValidator({@required String username}) {
-    return true;
+    final alphanumeric = RegExp(r'^\S[a-zA-Z0-9_]{3,25}$');
+    return alphanumeric.hasMatch(username.trim());
+  }
+
+  bool urlValidator({@required String url}) {
+    return validator.url(url);
   }
 
   bool passwordValidator({@required String password}) {

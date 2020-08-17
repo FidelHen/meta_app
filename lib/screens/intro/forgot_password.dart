@@ -1,4 +1,3 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
@@ -8,6 +7,7 @@ import 'package:meta_app/components/toast/error_toast.dart';
 import 'package:meta_app/utils/auth.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
+import 'package:meta_app/utils/service.dart';
 import 'package:meta_app/utils/text_style.dart';
 import 'package:overlay_support/overlay_support.dart';
 
@@ -129,7 +129,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     final email = emailController.text.trim();
 
     //Conditionals
-    if (EmailValidator.validate(email)) {
+    if (Service().emailValidator(email: email)) {
       Auth().resetPassword(context: context, email: email);
     } else {
       //Wrong email

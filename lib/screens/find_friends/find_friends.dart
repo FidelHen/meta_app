@@ -100,15 +100,14 @@ class _FindFriendsState extends State<FindFriends> {
                       bio:
                           'Stream every day on Twitch! Looking for aggro players on COD, DM me if you’re down!'),
                   ProfileSocials(
-                      twitchUrl: 'https://www.twitch.tv/nickmercs',
-                      fbGamingUrl: 'https://www.facebook.com/MuffinManStreams/',
-                      youtubeUrl: null,
-                      twitterUrl: null),
+                    socalMedias: [],
+                  ),
                   ProfileGamertags(
                     gamertagsList: [
                       GamertagModel(
                           platform: GamertagPlatform.LeagueOfLegends,
-                          gamertag: 'Dead_Eye20')
+                          gamertag: 'Dead_Eye20',
+                          game: GamertagPlatform.LeagueOfLegends)
                     ],
                     isBlurred: true,
                   ),
@@ -118,6 +117,7 @@ class _FindFriendsState extends State<FindFriends> {
                   VideoClip(
                     username: username,
                     profileImageUrl: profileImageUrl,
+                    videoUid: '1',
                     tags: ['League', 'Trolling', 'LOL'],
                     isOwner: false,
                     previewImageUrl:

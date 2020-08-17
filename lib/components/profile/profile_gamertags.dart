@@ -29,9 +29,6 @@ class _ProfileGamertagsState extends State<ProfileGamertags> {
     //Variables
     currentlyBlurred = widget.isBlurred ?? true;
 
-    //Functions
-    checkGamertags();
-
     super.initState();
   }
 
@@ -87,8 +84,8 @@ class _ProfileGamertagsState extends State<ProfileGamertags> {
                                     height: 25,
                                     child: Image.asset(
                                       getPlatformImage(
-                                          platform: widget
-                                              .gamertagsList[index].platform),
+                                          platform:
+                                              widget.gamertagsList[index].game),
                                     )),
                               ])
                         : Column(
@@ -99,8 +96,8 @@ class _ProfileGamertagsState extends State<ProfileGamertags> {
                                     height: 25,
                                     child: Image.asset(
                                       getPlatformImage(
-                                          platform: widget
-                                              .gamertagsList[index].platform),
+                                          platform:
+                                              widget.gamertagsList[index].game),
                                     )),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -128,7 +125,4 @@ class _ProfileGamertagsState extends State<ProfileGamertags> {
       return Container();
     }
   }
-
-  //Functions
-  void checkGamertags() {}
 }

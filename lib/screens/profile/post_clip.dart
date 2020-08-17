@@ -1,22 +1,40 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tags/flutter_tags.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:meta_app/components/FAB.dart';
 import 'package:meta_app/components/textFields.dart';
 import 'package:meta_app/components/toast/loading_toast.dart';
+import 'package:meta_app/components/toast/success_toast.dart';
+import 'package:meta_app/models/profile_model.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
 import 'package:meta_app/utils/text_style.dart';
+import 'package:meta_app/utils/user.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class PostClip extends StatefulWidget {
+  //Constructor
+  PostClip({@required this.profileData});
+
+  //Variables
+  final ProfileModel profileData;
   @override
   _PostClipState createState() => _PostClipState();
 }
 
 class _PostClipState extends State<PostClip>
     with SingleTickerProviderStateMixin {
+  //TextField controllers
+  TextEditingController youtubeUrlController;
+  TextEditingController youtubeTagsController;
+  TextEditingController twitchUrlController;
+  TextEditingController twitchTagsController;
+
   //Variables
   int selectedIndex;
   List<String> tagsList;
@@ -24,8 +42,22 @@ class _PostClipState extends State<PostClip>
   TabController tabController;
   bool keyboardIsHidden;
 
+  //Youtube
+  String youtubeVideoId;
+  YoutubePlayerController youtubeVideoController;
+  List<String> youtubeTags = [];
+  final kHtml = '''
+<iframe src="https://player.twitch.tv/?channel=huskerrs&parent=metathe.app" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
+''';
+
   @override
   void initState() {
+    //Textfield controllers
+    youtubeUrlController = TextEditingController();
+    youtubeTagsController = TextEditingController();
+    twitchUrlController = TextEditingController();
+    twitchTagsController = TextEditingController();
+
     //Variables
     selectedIndex = 0;
     submitButtonColor = youtubeRed;
@@ -60,6 +92,11 @@ class _PostClipState extends State<PostClip>
   void dispose() {
     //Tab Controller
     tabController.dispose();
+
+    if (youtubeVideoController != null) {
+      youtubeVideoController.dispose();
+    }
+
     super.dispose();
   }
 
@@ -114,28 +151,38 @@ class _PostClipState extends State<PostClip>
             child: ListView(physics: BouncingScrollPhysics(), children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 24, 0, 8),
-                child: AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: youtubeRed,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Image.asset(
-                      'images/youtube_logo.png',
-                      scale: 18,
-                    ),
-                  ),
-                ),
+                child: youtubeVideoId != null
+                    ? YoutubePlayer(
+                        controller: youtubeVideoController,
+                        showVideoProgressIndicator: true,
+                        bottomActions: [],
+                        progressColors: ProgressBarColors(
+                            playedColor: metaRed,
+                            handleColor: metaRed,
+                            backgroundColor: Colors.white38),
+                        topActions: [],
+                      )
+                    : AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: Container(
+                          color: youtubeRed,
+                          child: Image.asset(
+                            'images/youtube_logo.png',
+                            scale: 18,
+                          ),
+                        ),
+                      ),
               ),
               textFieldTitle(title: 'Youtube video url'),
               Padding(
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: TextField(
-                  onSubmitted: (value) {},
-                  // focusNode: usernameNode,
+                  onSubmitted: (value) {
+                    getYoutubeVideo(url: value);
+                  },
                   textInputAction: TextInputAction.done,
                   cursorColor: metaGreen,
-                  // controller: usernameController,
+                  controller: youtubeUrlController,
                   style: textFieldTextStyle,
                   decoration: InputDecoration(
                     hintStyle:
@@ -151,13 +198,19 @@ class _PostClipState extends State<PostClip>
               ),
               textFieldTitle(title: 'Clip tags'),
               Padding(
-                padding: EdgeInsets.only(bottom: 8.0),
+                padding: EdgeInsets.only(bottom: 12.0),
                 child: TextField(
-                  onSubmitted: (value) {},
-                  // focusNode: usernameNode,
+                  onChanged: (value) {
+                    if (value.split(' ')[1] != null) {
+                      setState(() {
+                        youtubeTags.add(value);
+                      });
+                      youtubeTagsController.clear();
+                    }
+                  },
                   textInputAction: TextInputAction.done,
                   cursorColor: metaGreen,
-                  // controller: usernameController,
+                  controller: youtubeTagsController,
                   style: textFieldTextStyle,
                   decoration: InputDecoration(
                     hintStyle:
@@ -171,6 +224,10 @@ class _PostClipState extends State<PostClip>
                   ),
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 18.0),
+                child: youtubeTagsEntry(),
+              ),
             ]),
           ),
           Padding(
@@ -179,14 +236,21 @@ class _PostClipState extends State<PostClip>
               left: DeviceSize().getWidth(context) / 16,
             ),
             child: ListView(physics: BouncingScrollPhysics(), children: [
+              AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: WebView(
+                    initialUrl: Uri.dataFromString(
+                            '<html><body>$kHtml</body></html>',
+                            mimeType: 'text/html')
+                        .toString(),
+                    javascriptMode: JavascriptMode.unrestricted,
+                  )),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 24, 0, 8),
                 child: AspectRatio(
                   aspectRatio: 16 / 9,
                   child: Container(
-                    decoration: BoxDecoration(
-                        color: twitchPurple,
-                        borderRadius: BorderRadius.circular(5)),
+                    color: twitchPurple,
                     child: Image.asset(
                       'images/twitch_logo.png',
                       scale: 18,
@@ -199,10 +263,8 @@ class _PostClipState extends State<PostClip>
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: TextField(
                   onSubmitted: (value) {},
-                  // focusNode: usernameNode,
                   textInputAction: TextInputAction.done,
                   cursorColor: metaGreen,
-                  // controller: usernameController,
                   style: textFieldTextStyle,
                   decoration: InputDecoration(
                     hintStyle:
@@ -222,10 +284,8 @@ class _PostClipState extends State<PostClip>
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: TextField(
                   onSubmitted: (value) {},
-                  // focusNode: usernameNode,
                   textInputAction: TextInputAction.done,
                   cursorColor: metaGreen,
-                  // controller: usernameController,
                   style: textFieldTextStyle,
                   decoration: InputDecoration(
                     hintStyle:
@@ -249,16 +309,105 @@ class _PostClipState extends State<PostClip>
               title: 'Post',
               color: submitButtonColor,
               onPressed: () {
-                showOverlayNotification((context) {
-                  return LoadingToast(
-                    title: 'Uploading clip',
-                  );
-                });
-                Navigator.pop(context);
+                uploadData();
               },
               isDark: true)
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+
+  //Functions
+  Future<void> uploadData() async {
+    //Variables
+    final String uid = await User().getUid();
+
+    //Conditionals
+    if (tabController.index == 0) {
+      showOverlayNotification((context) {
+        return LoadingToast(
+          title: 'Uploading clip',
+        );
+      });
+      //Variables
+      final batch = Firestore.instance.batch();
+      final userDocRef = Firestore.instance.collection('users').document(uid);
+      final videoRef = Firestore.instance.collection('clips').document();
+      final Map<String, dynamic> data = {
+        'video_uid': videoRef.documentID,
+        'video_url': youtubeUrlController.text ?? '',
+        'username': widget.profileData.username,
+        'date_added': DateTime.now().millisecondsSinceEpoch,
+        'tags': youtubeTags,
+      };
+
+      //Batch data
+      batch.setData(
+          userDocRef.collection('clips').document(videoRef.documentID), data);
+      batch.setData(videoRef, data);
+
+      //Upload to DB
+      batch.commit().then((value) async {
+        Navigator.pop(context);
+        await Future.delayed(Duration(seconds: 3));
+        showOverlayNotification((context) {
+          return SuccessToast(
+            title: 'Successfully uploaded clip',
+          );
+        });
+      });
+    }
+  }
+
+  void getYoutubeVideo({@required String url}) {
+    //Variables
+    youtubeVideoId = YoutubePlayer.convertUrlToId(url);
+
+    //Youtube controller
+    youtubeVideoController = YoutubePlayerController(
+      initialVideoId: youtubeVideoId,
+      flags: YoutubePlayerFlags(
+        autoPlay: true,
+        enableCaption: false,
+        controlsVisibleAtStart: true,
+      ),
+    );
+  }
+
+  //Widgets
+  Widget youtubeTagsEntry() {
+    return Tags(
+      alignment: WrapAlignment.start,
+      textField: null,
+      itemCount: youtubeTags.length, // required
+      itemBuilder: (int index) {
+        final String item = youtubeTags[index];
+        return ItemTags(
+          key: Key(index.toString()),
+          index: index, // required
+          title: item,
+          highlightColor: Colors.transparent,
+          pressEnabled: false,
+          borderRadius: BorderRadius.circular(50),
+          activeColor: metaLightBlue,
+          textStyle: clipTagsTextStyle,
+          removeButton: ItemTagsRemoveButton(
+            backgroundColor: Colors.white,
+            color: Colors.black,
+            onRemoved: () {
+              // Remove the item from the data source.
+              setState(() {
+                // required
+                youtubeTags.removeAt(index);
+              });
+              //required
+              return true;
+            },
+          ), // OR null,
+          onPressed: (item) => print(item),
+          onLongPressed: (item) => print(item),
+        );
+      },
     );
   }
 }

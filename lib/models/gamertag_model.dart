@@ -3,7 +3,8 @@ import 'package:meta_app/utils/enums.dart';
 
 class GamertagModel {
   //Constructor
-  GamertagModel({@required this.platform, @required this.gamertag, this.game});
+  GamertagModel(
+      {@required this.platform, @required this.gamertag, @required this.game});
 
   //Variables
   final GamertagPlatform platform;

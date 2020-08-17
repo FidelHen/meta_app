@@ -11,18 +11,20 @@ class ProfileBio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-          right: DeviceSize().getWidth(context) / 10,
-          left: DeviceSize().getWidth(context) / 10,
-          top: 25),
-      child: Center(
-        child: Text(
-          bio ?? '',
-          textAlign: TextAlign.center,
-          style: profileBioTextStyle,
-        ),
-      ),
-    );
+    return bio.trim().length != 0
+        ? Padding(
+            padding: EdgeInsets.only(
+                right: DeviceSize().getWidth(context) / 10,
+                left: DeviceSize().getWidth(context) / 10,
+                top: 25),
+            child: Center(
+              child: Text(
+                bio ?? '',
+                textAlign: TextAlign.center,
+                style: profileBioTextStyle,
+              ),
+            ),
+          )
+        : Container();
   }
 }
