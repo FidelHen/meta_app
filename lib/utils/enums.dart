@@ -8,6 +8,7 @@ enum SocialMedia {
 enum ProfileActionOption {
   IsFriend,
   IsNotFriend,
+  IsRequested,
   IsOwner,
 }
 
@@ -38,4 +39,15 @@ enum LeaderboardPositionIndicator {
   Neutral,
   Positive,
   Negative,
+}
+
+enum SearchViewState {
+  Loading,
+  Done,
+  Searching,
+}
+
+enum ReportClaim {
+  Clip,
+  Account,
 }

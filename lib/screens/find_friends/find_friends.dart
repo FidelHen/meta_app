@@ -103,6 +103,7 @@ class _FindFriendsState extends State<FindFriends> {
                     socalMedias: [],
                   ),
                   ProfileGamertags(
+                    isOwner: false,
                     gamertagsList: [
                       GamertagModel(
                           platform: GamertagPlatform.LeagueOfLegends,
@@ -120,7 +121,7 @@ class _FindFriendsState extends State<FindFriends> {
                     videoUid: '1',
                     tags: ['League', 'Trolling', 'LOL'],
                     isOwner: false,
-                    previewImageUrl:
+                    thumbnailUrl:
                         'https://img.redbull.com/images/c_crop,x_225,y_0,h_958,w_1437/c_fill,w_1500,h_1000/q_auto,f_auto/redbullcom/2017/10/11/f64b8633-e848-4afa-9791-9da869f7bfd7/league-of-legends-champions',
                     clipPlatform: ClipPlatform.Youtube,
                     videoUrl: 'https://www.youtube.com/watch?v=6LpA7_-Srqg',

@@ -1,12 +1,43 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meta_app/components/toast/success_toast.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
+import 'package:meta_app/utils/user.dart';
 import 'package:overlay_support/overlay_support.dart';
 
-void showClipOwnerModal({@required context}) {
+void showClipOwnerModal(
+    {@required context,
+    @required Function callback,
+    @required String videoUid}) {
+  //Functions
+  Future<void> deleteClip() async {
+    Navigator.pop(context);
+    //Variables
+    final batch = Firestore.instance.batch();
+    final String uid = await User().getUid();
+
+    batch.delete(Firestore.instance
+        .collection('users')
+        .document(uid)
+        .collection('clips')
+        .document(videoUid));
+
+    batch.delete(Firestore.instance.collection('clips').document(videoUid));
+
+    batch.commit().then((value) {
+      showOverlayNotification((context) {
+        return SuccessToast(
+          title: 'Clip deleted',
+        );
+      });
+      callback();
+    });
+  }
+
+  //Modal
   showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -37,12 +68,7 @@ void showClipOwnerModal({@required context}) {
                       width: DeviceSize().getWidth(context),
                       child: FlatButton(
                         onPressed: () {
-                          showOverlayNotification((context) {
-                            return SuccessToast(
-                              title: 'Clip deleted',
-                            );
-                          });
-                          Navigator.pop(context);
+                          deleteClip();
                         },
                         child: Container(
                             height: 65,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meta_app/components/video_clip.dart';
 import 'package:meta_app/models/gamertag_model.dart';
 import 'package:meta_app/models/social_media_model.dart';
 
@@ -11,7 +12,7 @@ class ProfileModel {
     @required this.socials,
     @required this.uid,
     @required this.username,
-    @required this.videoUids,
+    @required this.videoClips,
   });
 
   //Variables
@@ -21,5 +22,5 @@ class ProfileModel {
   final String bio;
   final List<SocialMediaModel> socials;
   final List<GamertagModel> gamertags;
-  final List<String> videoUids;
+  final List<VideoClip> videoClips;
 }

@@ -13,10 +13,12 @@ class ProfileListItem extends StatelessWidget {
       @required this.isPro,
       @required this.profileImageUrl,
       @required this.isOwner,
+      @required this.uid,
       this.isNewMessage});
 
   //Variables
   final String username;
+  final String uid;
   final bool isPro;
   final bool isOwner;
   final bool isNewMessage;
@@ -26,12 +28,16 @@ class ProfileListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (isNewMessage) {
-          showMessageModal(context: context, isNewMessage: true);
+        if (isNewMessage != null) {
+          if (isNewMessage) {
+            showMessageModal(context: context, isNewMessage: true);
+          }
         } else {
           if (!isOwner) {
-            Navigation()
-                .segue(page: Friend(), context: context, fullScreen: false);
+            Navigation().segue(
+                page: Friend(uid: uid, isPro: isPro, username: username),
+                context: context,
+                fullScreen: false);
           }
         }
       },
@@ -50,7 +56,9 @@ class ProfileListItem extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(right: 8.0),
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage(profileImageUrl ?? ''),
+                    backgroundImage: profileImageUrl.trim().length != 0
+                        ? NetworkImage(profileImageUrl ?? '')
+                        : AssetImage('images/temp_avatar.png'),
                   ),
                 ),
                 Column(

@@ -89,7 +89,7 @@ class _ProfileActionButtonsState extends State<ProfileActionButtons> {
             } else {
               showOverlayNotification((context) {
                 return WarningToast(
-                  title: 'Go pro to message',
+                  title: 'Go pro or follow to message',
                 );
               });
             }
@@ -124,6 +124,9 @@ class _ProfileActionButtonsState extends State<ProfileActionButtons> {
     } else if (currentProfileAction == ProfileActionOption.IsNotFriend) {
       buttonText = 'Follow';
       borderColor = metaYellow;
+    } else if (currentProfileAction == ProfileActionOption.IsRequested) {
+      buttonText = 'Requested';
+      borderColor = Colors.white;
     }
 
     return OutlineButton(
@@ -147,7 +150,7 @@ class _ProfileActionButtonsState extends State<ProfileActionButtons> {
             );
           });
           setState(() {
-            currentProfileAction = ProfileActionOption.IsFriend;
+            currentProfileAction = ProfileActionOption.IsRequested;
           });
         }
       },

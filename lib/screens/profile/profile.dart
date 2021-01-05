@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:meta_app/components/loading_progress_indicator.dart';
 import 'package:meta_app/components/profile/profile_action_buttons.dart';
 import 'package:meta_app/components/profile/profile_bio.dart';
@@ -20,7 +21,6 @@ import 'package:meta_app/utils/navigation.dart';
 import 'package:meta_app/utils/text_style.dart';
 import 'package:meta_app/utils/user.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:http/http.dart' as http;
 
 class Profile extends StatefulWidget {
   @override
@@ -114,6 +114,7 @@ class _ProfileState extends State<Profile> {
                 Navigation().segue(
                     page: PostClip(
                       profileData: profileData,
+                      callback: getData,
                     ),
                     context: context,
                     fullScreen: true);
@@ -145,21 +146,45 @@ class _ProfileState extends State<Profile> {
       ProfileGamertags(
         gamertagsList: profileData.gamertags,
         isBlurred: false,
+        isOwner: true,
       ),
       SizedBox(
         height: 24,
       ),
-      VideoClip(
-        username: 'Fidelhen',
-        profileImageUrl: profileData.profileImageUrl,
-        tags: ['League', 'Trolling', 'LOL'],
-        isOwner: true,
-        previewImageUrl:
-            'https://img.redbull.com/images/c_crop,x_225,y_0,h_958,w_1437/c_fill,w_1500,h_1000/q_auto,f_auto/redbullcom/2017/10/11/f64b8633-e848-4afa-9791-9da869f7bfd7/league-of-legends-champions',
-        clipPlatform: ClipPlatform.Youtube,
-        videoUrl: 'https://www.youtube.com/watch?v=6LpA7_-Srqg',
-        videoUid: '1',
-      ),
+      profileData.videoClips.length != 0
+          ? ListView.builder(
+              itemCount: profileData.videoClips.length ?? 0,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                final videoData = profileData.videoClips[index];
+                return VideoClip(
+                  username: videoData.username,
+                  profileImageUrl: videoData.profileImageUrl,
+                  tags: videoData.tags,
+                  thumbnailUrl: videoData.thumbnailUrl,
+                  isOwner: videoData.isOwner,
+                  clipPlatform: videoData.clipPlatform,
+                  videoUid: videoData.videoUid,
+                  videoUrl: videoData.videoUrl,
+                  deleteCallback: () {
+                    setState(() {
+                      profileData.videoClips.removeAt(index);
+                    });
+                  },
+                );
+              })
+          : Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Center(
+                child: Text(
+                  'No clips added yet',
+                  style: GoogleFonts.robotoMono(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16),
+                ),
+              ),
+            )
     ];
   }
 
@@ -175,6 +200,11 @@ class _ProfileState extends State<Profile> {
     final DocumentSnapshot document = await User().getProfileData(uid: uid);
     final List<GamertagModel> gamertags = await User().getGamertags(uid: uid);
     final List<SocialMediaModel> socials = await User().getSocials(uid: uid);
+    List<VideoClip> clips = await User().getClips(
+      uid: uid,
+      profileImage: document.data['profile_image'],
+    );
+    // final List<VideoClip> clips =
     final data = document.data;
 
     //Set profile data
@@ -185,7 +215,7 @@ class _ProfileState extends State<Profile> {
         socials: [],
         uid: data['uid'],
         username: data['username'] ?? '',
-        videoUids: []);
+        videoClips: clips);
 
     //Set gamertags
     gamertags.forEach((element) {
@@ -195,7 +225,7 @@ class _ProfileState extends State<Profile> {
           game: element.game));
     });
 
-    //Set Socials
+    //Set socials
     socials.forEach((element) {
       profileData.socials
           .add(SocialMediaModel(platform: element.platform, url: element.url));

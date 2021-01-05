@@ -2,12 +2,13 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meta_app/components/modals/report_modal.dart';
-import 'package:meta_app/components/toast/success_toast.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
-import 'package:overlay_support/overlay_support.dart';
+import 'package:meta_app/utils/enums.dart';
 
-void showFriendModal({@required context}) {
+void showFriendModal({
+  @required context,
+}) {
   showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -36,45 +37,10 @@ void showFriendModal({@required context}) {
                       width: DeviceSize().getWidth(context),
                       child: FlatButton(
                         onPressed: () {
-                          showOverlayNotification((context) {
-                            return SuccessToast(
-                              title: 'Unfollowed',
-                            );
-                          });
                           Navigator.pop(context);
-                        },
-                        child: Container(
-                            height: 65,
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(right: 12.0),
-                                  child: Icon(
-                                    EvaIcons.personRemove,
-                                    color: metaRed,
-                                  ),
-                                ),
-                                Text(
-                                  'Unfollow',
-                                  style: GoogleFonts.openSans(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            )),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 8.0),
-                    child: Container(
-                      color: metaLightBlue,
-                      width: DeviceSize().getWidth(context),
-                      child: FlatButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          showReportModal(context: context);
+                          showReportModal(
+                              context: context,
+                              reportType: ReportClaim.Account);
                         },
                         child: Container(
                             height: 65,

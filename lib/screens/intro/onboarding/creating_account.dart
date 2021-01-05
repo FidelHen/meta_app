@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
@@ -143,6 +144,8 @@ class _CreatingAccountState extends State<CreatingAccount> {
     //Variables
     String imageUrl;
     String uid = await User().getUid();
+    String email =
+        await FirebaseAuth.instance.currentUser().then((value) => value.email);
 
     //Firebase Storage
     if (widget.profileImage != null) {
@@ -176,9 +179,22 @@ class _CreatingAccountState extends State<CreatingAccount> {
           'username': widget.username,
           'bio': widget.bio,
           'profile_image': imageUrl ?? '',
-          'is_registered': true
+          'is_registered': true,
+          'is_pro': false
         },
         merge: true);
+
+    batch.setData(
+        Firestore.instance
+            .collection('usernames')
+            .document(widget.username.toLowerCase()),
+        {
+          'username': widget.username,
+          'email': email,
+          'profile_image': imageUrl ?? '',
+          'is_pro': false,
+          'uid': uid
+        });
 
     widget.gamertags.forEach((element) {
       batch.setData(

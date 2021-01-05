@@ -30,6 +30,7 @@ class _MediaPlayerState extends State<MediaPlayer> {
 
     //Functions
     startVideo();
+
     super.initState();
   }
 

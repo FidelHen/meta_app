@@ -1,12 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meta_app/components/modals/report_text_modal.dart';
 import 'package:meta_app/components/toast/success_toast.dart';
 import 'package:meta_app/utils/colors.dart';
 import 'package:meta_app/utils/device_size.dart';
+import 'package:meta_app/utils/enums.dart';
+import 'package:meta_app/utils/user.dart';
 import 'package:overlay_support/overlay_support.dart';
 
-void showReportModal({@required context}) {
+void showReportModal({@required context, @required ReportClaim reportType}) {
+  //Functions
+  void report({@required String reason, @required ReportClaim report}) async {
+    showOverlayNotification((context) {
+      return SuccessToast(
+        title: 'Reported',
+      );
+    });
+    Navigator.pop(context);
+
+    //Variables
+    final String uid = await User().getUid();
+
+    //Upload data
+    Firestore.instance.collection('reports').document().setData({
+      'reporter_uid': uid,
+      'reason': reason,
+      'report_type': report.toString()
+    });
+  }
+
+  //Modal
   showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -37,12 +61,9 @@ void showReportModal({@required context}) {
                       width: DeviceSize().getWidth(context),
                       child: FlatButton(
                         onPressed: () {
-                          showOverlayNotification((context) {
-                            return SuccessToast(
-                              title: 'Reported',
-                            );
-                          });
-                          Navigator.pop(context);
+                          report(
+                              reason: 'Bullying or harrassment',
+                              report: reportType);
                         },
                         child: Container(
                             height: 65,
@@ -67,12 +88,7 @@ void showReportModal({@required context}) {
                       width: DeviceSize().getWidth(context),
                       child: FlatButton(
                         onPressed: () {
-                          showOverlayNotification((context) {
-                            return SuccessToast(
-                              title: 'Reported',
-                            );
-                          });
-                          Navigator.pop(context);
+                          report(reason: 'Scam or fraud', report: reportType);
                         },
                         child: Container(
                             height: 65,
@@ -97,12 +113,9 @@ void showReportModal({@required context}) {
                       width: DeviceSize().getWidth(context),
                       child: FlatButton(
                         onPressed: () {
-                          showOverlayNotification((context) {
-                            return SuccessToast(
-                              title: 'Reported',
-                            );
-                          });
-                          Navigator.pop(context);
+                          report(
+                              reason: 'Nudity or sexual activity',
+                              report: reportType);
                         },
                         child: Container(
                             height: 65,
@@ -127,12 +140,9 @@ void showReportModal({@required context}) {
                       width: DeviceSize().getWidth(context),
                       child: FlatButton(
                         onPressed: () {
-                          showOverlayNotification((context) {
-                            return SuccessToast(
-                              title: 'Reported',
-                            );
-                          });
-                          Navigator.pop(context);
+                          report(
+                              reason: 'Wrong content for Meta',
+                              report: reportType);
                         },
                         child: Container(
                             height: 65,

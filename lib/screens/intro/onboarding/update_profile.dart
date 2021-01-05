@@ -253,8 +253,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
       keyboardIsHidden = true;
     });
     if (Service().usernameValidator(username: usernameController.text)) {
-      final bool usernameIsTaken =
-          await Auth().usernameAlreadyInUse(username: usernameController.text);
+      final bool usernameIsTaken = await Auth().usernameAlreadyInUse(
+          username: usernameController.text.toLowerCase());
 
       if (!usernameIsTaken) {
         Navigation().segueToRoot(
