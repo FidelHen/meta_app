@@ -1,1 +1,1 @@
-# meta_app
+# Meta the app
